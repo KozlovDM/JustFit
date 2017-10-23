@@ -3,8 +3,9 @@ package Authorization
 import (
 	"JustFit/BD"
 	"io"
-	"log"
 	"net/http"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 //SingUp
@@ -25,11 +26,13 @@ func SingUp(write http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	var hashPassword string
-	//Hash = Функция получения Хэша ключа
+	hashPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		//ошибка
+	}
 	//Проверка Работоспособности телефона
 
-	err := WorkWithBD.AddUser(fullname, login, phone, hashPassword)
+	err = WorkWithBD.AddUser(fullname, login, phone, hashPassword)
 	if err != nil {
 		return
 	}
@@ -53,19 +56,7 @@ func SingIn(write http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	var hashPassword string
-	//Hash = Функция получения Хэша ключа
-
-	if result.HashPassword != hashPassword {
+	if bcrypt.CompareHashAndPassword(result.HashPassword, []byte(password)) != nil {
 		io.WriteString(write, "Неверный номер телефона и/или пароль")
-	}
-}
-
-func init() {
-	http.HandleFunc("/SingUp", SingUp)
-	http.HandleFunc("/SingIn", SingIn)
-	err := http.ListenAndServe(":27017", nil)
-	if err != nil {
-		log.Fatal("ListenAndServe: ", err)
 	}
 }

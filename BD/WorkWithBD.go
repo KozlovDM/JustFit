@@ -10,14 +10,14 @@ type Users struct {
 	Name         string
 	Login        string
 	Phone        string
-	HashPassword string
+	HashPassword []byte
 }
 
 //SessionMongo
 var SessionMongo *mgo.Session
 
 //AddUser
-func AddUser(fullname string, login string, phone string, password string) error {
+func AddUser(fullname string, login string, phone string, password []byte) error {
 	stream := SessionMongo.DB("JustFit").C("Users")
 	err := stream.Insert(&Users{fullname, login, phone, password})
 	return err

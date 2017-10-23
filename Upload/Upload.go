@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func Upload(w http.ResponseWriter, r *http.Request) string {
+func Upload(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	file, handler, err := r.FormFile("image")
 	if err != nil {
@@ -25,5 +25,4 @@ func Upload(w http.ResponseWriter, r *http.Request) string {
 	}
 	defer file.Close()
 	io.Copy(newFile, file)
-	return path
 }
