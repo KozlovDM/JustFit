@@ -2,7 +2,7 @@ package Authorization
 
 import (
 	"JustFit/BD"
-	"io"
+	"JustFit/JSONResponse"
 	"net/http"
 
 	"golang.org/x/crypto/bcrypt"
@@ -17,12 +17,12 @@ func SingUp(write http.ResponseWriter, request *http.Request) {
 	password := request.FormValue("password")
 
 	if WorkWithBD.IsPhoneExist(phone) {
-		io.WriteString(write, "Такой номер телефона уже зарегестрирован")
+		JSONResponse.ResponseWhithMessage(write, "Такой номер телефона уже зарегестрирован", http.StatusConflict)
 		return
 	}
 
 	if WorkWithBD.IsLoginExist(phone) {
-		io.WriteString(write, "Такой логин уже существует")
+		JSONResponse.ResponseWhithMessage(write, "Такой логин уже существует", http.StatusConflict)
 		return
 	}
 
@@ -36,6 +36,7 @@ func SingUp(write http.ResponseWriter, request *http.Request) {
 	if err != nil {
 		return
 	}
+	JSONResponse.ResponseWhithMessage(write, "Успешная регестрация", http.StatusOK)
 }
 
 //SingIn
@@ -45,18 +46,19 @@ func SingIn(write http.ResponseWriter, request *http.Request) {
 	login := request.PostFormValue("login")
 	password := request.FormValue("password")
 
-	var result WorkWithBD.Users
+	var result WorkWithBD.User
 
 	if WorkWithBD.IsPhoneExist(phone) {
 		result = WorkWithBD.FindUserPhone(phone)
 	} else if WorkWithBD.IsLoginExist(login) {
 		result = WorkWithBD.FindUserLogin(login)
 	} else {
-		io.WriteString(write, "Неверный номер телефона и/или пароль")
+		JSONResponse.ResponseWhithMessage(write, "Неверный номер телефона и/или пароль", http.StatusConflict)
 		return
 	}
 
 	if bcrypt.CompareHashAndPassword(result.HashPassword, []byte(password)) != nil {
-		io.WriteString(write, "Неверный номер телефона и/или пароль")
+		JSONResponse.ResponseWhithMessage(write, "Неверный номер телефона и/или пароль", http.StatusConflict)
 	}
+	JSONResponse.ResponseWhithMessage(write, "Успешная авторизация", http.StatusOK)
 }
