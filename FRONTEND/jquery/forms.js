@@ -38,4 +38,16 @@ $(document).ready(function(){
     $('.form-reg__close').mouseleave(function(){
         $('.form-reg__close').css('border-style','inherit');
     });
+    
+    $('.form-reg__enterTitle').mousemove(function(){
+        $('.form-reg__enterTitle').css('color','red');
+    });
+    $('.form-reg__enterTitle').mouseleave(function(){
+        $('.form-reg__enterTitle').css('color','blue');
+    });  
+    
+    $('.form-reg__enterTitle').click(function(){
+        $('.form-reg').hide();
+        $('.form-enter').show();
+    });
 });

@@ -73,13 +73,17 @@ body, .header, .footer {
     color: black;
 }
 
-.form-enter__regTitle {
+.form-enter__regTitle, .form-reg__enterTitle {
     margin: 0 auto;
     margin-top: 30px;
     font-size: 20px;
     width: 170px;
     color: blue;
     font-weight: bold;
+}
+
+.form-reg__enterTitle {
+    width: 195px;
 }
 
 .form-reg__title {
