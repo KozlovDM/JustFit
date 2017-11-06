@@ -59,6 +59,14 @@ body, .header, .footer {
     background-image: url(images/form.jpg);
 }
 
+.form-enter__close, .form-reg__close {
+    width: 27px;
+    height: 25px;
+    background-image: url(images/close.png);
+    margin: 0 0 0 calc(100% - 30px);
+    border-style: inherit;
+}
+
 .form-enter__title, .form-reg__title {
     margin: 0 auto;
     width: 70px;
