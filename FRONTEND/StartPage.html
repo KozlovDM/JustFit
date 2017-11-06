@@ -4,27 +4,51 @@
         <meta charset="utf-8">
         <title>JustFit</title>
         <link rel="stylesheet" href="css/stylesStart.css">
+        <script src="jquery/jquery-3.2.1.min.js"></script>
+        <script src="jquery/forms.js"></script>
     </head>
     <body>
         <header class="header">
             <ul class="header-menu">
                 <li class="header-menu__item">
-                    <a href="#home" class="header-menu__link">Главная</a>
+                    <div class="header-menu__block">Главная</div>
                 </li>
                 <li class="header-menu__item">
-                    <a href="#application" class="header-menu__link">О приложении</a>
+                    <div class="header-menu__block">О приложении</div>
                 </li>
                 <li class="header-menu__item">
-                    <a href="#enter" class="header-menu__link">Войти</a>
+                    <div class="header-menu__block">Войти</div>
                 </li>
             </ul>
             <div class="header-title">JustFit</div>
             <div class="header-image"/>
+            
+            <div class="form-enter">
+                <div class="form-enter__title"><h1>Вход</h1></div>
+                <div class="form-enter__image"></div>
+                <form action="SignIn" method="POST">
+                    <input type="tel" name="phone" placeholder="8-(xxx)-(xxx)-(xxxx)" required pattern="8[0-9]{3}[0-9]{3}[0-9]{4}"/><br/>
+                    <input type="password" name="password" placeholder="Пароль" required pattern="[a-z, A-Z, 0-9]{7}"/><br/>
+                    <button type="submit">Войти</button> 
+                </form>
+                <div class="form-enter__regTitle">Зарегистрироваться</div>
+            </div>
+            
+            <div class="form-reg">
+                <div class="form-reg__title"><h1>Регистрация</h1></div>
+                <form action="SignUp" method="POST">
+                    <input type="tel" name="phone" placeholder="8-(xxx)-(xxx)-(xxxx)" required pattern="8[0-9]{3}[0-9]{3}[0-9]{4}"/><br/>
+                    <input type="text" name="fullname" placeholder="Имя и Фамилия" required/><br/>
+                    <input type="text" name="login" placeholder="Имя пользователя" required/><br/>
+                    <input type="password" name="password" placeholder="Пароль" required pattern="[a-z, A-Z, 0-9]{7}"/><br/>
+                    <button type="submit">Отправить</button> 
+                </form> 
+            </div>
         </header>
         <footer class="footer">
             <ul class="footer-menu">
                 <li class="footer-menu__item">
-                    <a href="#about" class="footer-menu__link">Разработчики</a>
+                    <div class="footer-menu__block">Разработчики</div>
                 </li>
             </ul>
         </footer>

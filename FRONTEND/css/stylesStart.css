@@ -17,7 +17,7 @@ body, .header, .footer {
     height: 100px;
 }
 
-.header-menu__link {
+.header-menu__block {
     display: block;
     line-height: 100px;
     min-width: 100px;
@@ -30,7 +30,7 @@ body, .header, .footer {
     text-decoration: none;
 }
 
-.header-menu__link:hover {
+.header-menu__block:hover {
     background: #575454;
 }
 
@@ -50,11 +50,57 @@ body, .header, .footer {
     background-size: cover;
 }
 
+.form-enter, .form-reg {
+    position: absolute;
+    margin: 5% 40% 5% 40%;
+    padding-bottom: 5%;
+    width: 20%;
+    border-style: groove;
+    background-image: url(images/form.jpg);
+}
+
+.form-enter__title, .form-reg__title {
+    margin: 0 auto;
+    width: 70px;
+    color: black;
+}
+
+.form-enter__regTitle {
+    margin: 0 auto;
+    margin-top: 30px;
+    font-size: 20px;
+    width: 170px;
+    color: blue;
+    font-weight: bold;
+}
+
+.form-reg__title {
+    width: 180px;
+}
+
+.form-enter__image {
+    background-image: url(images/profile.png);
+    height: 118px;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+    width: 118px;
+    padding-bottom: 5%;
+}
+
+form {
+    margin: 0 auto;
+    width: 160px;
+}
+
+input {
+    margin-bottom: 10px;
+}
+
 .footer-menu {
     height: 50px;
 }
 
-.footer-menu__link {
+.footer-menu__block {
     display: block;
     line-height: 50px;
     min-width: 100px;
@@ -67,6 +113,6 @@ body, .header, .footer {
     text-decoration: none;
 }
 
-.footer-menu__link:hover {
+.footer-menu__block:hover {
     background: #575454;
 }
