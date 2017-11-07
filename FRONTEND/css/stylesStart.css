@@ -1,0 +1,130 @@
+body {
+    margin: 0;
+}
+
+body, .header, .footer {
+    background: #303030;
+}
+
+.header-menu, .footer-menu {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+}
+
+.header-menu {
+    height: 100px;
+}
+
+.header-menu__block {
+    display: block;
+    line-height: 100px;
+    min-width: 100px;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 0 30px;
+    font-size: 14px;
+    color: white;
+    letter-spacing: 1px;
+    text-decoration: none;
+}
+
+.header-menu__block:hover {
+    background: #575454;
+}
+
+.header-title {
+    color: white;
+    font-size: 70px;
+    letter-spacing: 5px;
+    font-weight: 900;
+    position: absolute;
+    margin: 260px calc((100% - 240px) / 2);
+    width: 240px;
+}
+
+.header-image {
+    height: 600px;
+    background-image: url(images/banner.jpg);
+    background-size: cover;
+}
+
+.form-enter, .form-reg {
+    position: absolute;
+    margin: 5% 40% 5% 40%;
+    padding-bottom: 5%;
+    width: 20%;
+    border-style: groove;
+    background-image: url(images/form.jpg);
+}
+
+.form-enter__close, .form-reg__close {
+    width: 27px;
+    height: 25px;
+    background-image: url(images/close.png);
+    margin: 0 0 0 calc(100% - 30px);
+    border-style: inherit;
+}
+
+.form-enter__title, .form-reg__title {
+    margin: 0 auto;
+    width: 70px;
+    color: black;
+}
+
+.form-enter__regTitle, .form-reg__enterTitle {
+    margin: 0 auto;
+    margin-top: 30px;
+    font-size: 20px;
+    width: 170px;
+    color: blue;
+    font-weight: bold;
+}
+
+.form-reg__enterTitle {
+    width: 195px;
+}
+
+.form-reg__title {
+    width: 180px;
+}
+
+.form-enter__image {
+    background-image: url(images/profile.png);
+    height: 118px;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+    width: 118px;
+    padding-bottom: 5%;
+}
+
+form {
+    margin: 0 auto;
+    width: 160px;
+}
+
+input {
+    margin-bottom: 10px;
+}
+
+.footer-menu {
+    height: 50px;
+}
+
+.footer-menu__block {
+    display: block;
+    line-height: 50px;
+    min-width: 100px;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 0 30px;
+    font-size: 14px;
+    color: white;
+    letter-spacing: 1px;
+    text-decoration: none;
+}
+
+.footer-menu__block:hover {
+    background: #575454;
+}

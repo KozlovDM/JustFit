@@ -22,15 +22,7 @@ func SingUp(write http.ResponseWriter, request *http.Request) {
 	}
 
 	if WorkWithBD.IsPhoneExist(phone) {
-<<<<<<< HEAD
-<<<<<<< HEAD
 		JSONResponse.ResponseWhithMessage(write, "Такой номер телефона уже заригестрирован", http.StatusConflict)
-=======
-		JSONResponse.ResponseWhithMessage(write, "Такой номер телефона уже зарегестрирован", http.StatusConflict)
->>>>>>> c039ae87024e99b2581efc1c8627aa042410cded
-=======
-		JSONResponse.ResponseWhithMessage(write, "Такой номер телефона уже зарегестрирован", http.StatusConflict)
->>>>>>> c039ae87024e99b2581efc1c8627aa042410cded
 		return
 	}
 
@@ -51,15 +43,7 @@ func SingUp(write http.ResponseWriter, request *http.Request) {
 		JSONResponse.ResponseWhithMessage(write, "Внутренняя ошибка", http.StatusInternalServerError)
 		return
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
 	JSONResponse.ResponseWhithMessage(write, "Успешная регистрация", http.StatusOK)
-=======
-	JSONResponse.ResponseWhithMessage(write, "Успешная регестрация", http.StatusOK)
->>>>>>> c039ae87024e99b2581efc1c8627aa042410cded
-=======
-	JSONResponse.ResponseWhithMessage(write, "Успешная регестрация", http.StatusOK)
->>>>>>> c039ae87024e99b2581efc1c8627aa042410cded
 }
 
 //SingIn
@@ -76,29 +60,13 @@ func SingIn(write http.ResponseWriter, request *http.Request) {
 	} else if WorkWithBD.IsLoginExist(login) {
 		result = WorkWithBD.FindUserLogin(login)
 	} else {
-<<<<<<< HEAD
-<<<<<<< HEAD
 		JSONResponse.ResponseWhithMessage(write, "Неверный номер телефона и/или пароль", http.StatusUnauthorized)
-=======
-		JSONResponse.ResponseWhithMessage(write, "Неверный номер телефона и/или пароль", http.StatusConflict)
->>>>>>> c039ae87024e99b2581efc1c8627aa042410cded
-=======
-		JSONResponse.ResponseWhithMessage(write, "Неверный номер телефона и/или пароль", http.StatusConflict)
->>>>>>> c039ae87024e99b2581efc1c8627aa042410cded
 		return
 	}
 
 	if bcrypt.CompareHashAndPassword(result.HashPassword, []byte(password)) != nil {
-<<<<<<< HEAD
-<<<<<<< HEAD
 		JSONResponse.ResponseWhithMessage(write, "Неверный номер телефона и/или пароль", http.StatusUnauthorized)
 		return
-=======
-		JSONResponse.ResponseWhithMessage(write, "Неверный номер телефона и/или пароль", http.StatusConflict)
->>>>>>> c039ae87024e99b2581efc1c8627aa042410cded
-=======
-		JSONResponse.ResponseWhithMessage(write, "Неверный номер телефона и/или пароль", http.StatusConflict)
->>>>>>> c039ae87024e99b2581efc1c8627aa042410cded
 	}
 	JSONResponse.ResponseWhithMessage(write, "Успешная авторизация", http.StatusOK)
 }
