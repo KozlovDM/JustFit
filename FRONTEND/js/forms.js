@@ -1,10 +1,27 @@
 $(document).ready(function(){
     $('.form-enter').hide();  
     $('.form-reg').hide();
+    $('.header-about__text').hide();
     
     $('.header-menu__block:last').click(function(){
         $('.form-reg').hide();
+        $('.header-title').hide();
+        $('.header-about__text').hide();
         $('.form-enter').show();
+    });
+    
+     $('.header-menu__block:eq(1)').click(function(){
+        $('.form-reg').hide();
+        $('.form-enter').hide();
+        $('.header-title').hide();
+        $('.header-about__text').show();
+    });
+    
+    $('.header-menu__block:first').click(function(){
+        $('.form-reg').hide();
+        $('.form-enter').hide();
+        $('.header-about__text').hide();
+        $('.header-title').show();
     });
     
     $('.form-enter__close').mousemove(function(){
@@ -15,6 +32,7 @@ $(document).ready(function(){
     });
     $('.form-enter__close').click(function(){
         $('.form-enter').hide();
+        $('.header-title').show();
     });
     
     $('.form-enter__regTitle').mousemove(function(){
@@ -30,6 +48,7 @@ $(document).ready(function(){
     });
     $('.form-reg__close').click(function(){
         $('.form-reg').hide();
+        $('.header-title').show();
     });
     
     $('.form-reg__close').mousemove(function(){

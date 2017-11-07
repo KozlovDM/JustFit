@@ -50,6 +50,13 @@ body, .header, .footer {
     background-size: cover;
 }
 
+.header-about__text {
+    font-size: 40px;
+    color: white;
+    padding-top: 200px;
+    text-align: center;
+}
+
 .form-enter, .form-reg {
     position: absolute;
     margin: 5% 40% 5% 40%;
