@@ -1,17 +1,19 @@
-package Main
+package main
 
 import (
 	"JustFit/Authorization"
-	"JustFit/Upload"
+	"JustFit/File"
+	"log"
 	"net/http"
 )
 
 func main() {
-	http.HandleFunc("/SingUp", Authorization.SingUp)
-	http.HandleFunc("/SingIn", Authorization.SingIn)
-	http.HandleFunc("/Upload", Upload.Upload)
-	err := http.ListenAndServe(":27017", nil)
+	http.HandleFunc("/SignUp", Authorization.SingUp)
+	http.HandleFunc("/SignIn", Authorization.SingIn)
+	http.HandleFunc("/Upload", File.Upload)
+	http.HandleFunc("/Download", File.Download)
+	err := http.ListenAndServe(":3000", nil)
 	if err != nil {
-		//ошибка
+		log.Fatalln(err)
 	}
 }
