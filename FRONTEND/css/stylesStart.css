@@ -71,19 +71,24 @@ body, .header, .footer {
     margin: 0 auto;
     width: 70px;
     color: black;
+    text-decoration: none;
 }
 
 .form-enter__regTitle, .form-reg__enterTitle {
-    margin: 0 auto;
-    margin-top: 30px;
+    display: block;
+    line-height: 20px;
+    min-width: 170px;
+    padding: 0 calc((100% - 170px) / 2);
+    padding-top: 20px;
     font-size: 20px;
-    width: 170px;
     color: blue;
-    font-weight: bold;
+    text-decoration: none;
 }
 
 .form-reg__enterTitle {
-    width: 195px;
+    min-width: 180px;
+    padding: 0 calc((100% - 180px) / 2);
+    padding-top: 20px;
 }
 
 .form-reg__title {
