@@ -28,6 +28,7 @@ body, .header, .footer {
     color: white;
     letter-spacing: 1px;
     text-decoration: none;
+    font-family: 'Gloria Hallelujah', cursive;
 }
 
 .header-menu__block:hover {
@@ -42,6 +43,7 @@ body, .header, .footer {
     position: absolute;
     margin: 260px calc((100% - 240px) / 2);
     width: 240px;
+    font-family: 'Gloria Hallelujah', sans-serif;
 }
 
 .header-image {
@@ -55,6 +57,7 @@ body, .header, .footer {
     color: white;
     padding-top: 200px;
     text-align: center;
+    font-family: 'Raleway', fantasy;
 }
 
 .form-enter, .form-reg {
@@ -64,6 +67,7 @@ body, .header, .footer {
     width: 20%;
     border-style: groove;
     background-image: url(images/form.jpg);
+    font-family: 'Gloria Hallelujah', fantasy;
 }
 
 .form-enter__close, .form-reg__close {
@@ -120,6 +124,10 @@ input {
     margin-bottom: 10px;
 }
 
+button {
+    font-family: 'Gloria Hallelujah', cursive;
+}
+
 .footer-menu {
     height: 50px;
 }
@@ -135,6 +143,7 @@ input {
     color: white;
     letter-spacing: 1px;
     text-decoration: none;
+    font-family: 'Gloria Hallelujah', cursive;
 }
 
 .footer-menu__block:hover {
