@@ -16,7 +16,7 @@ $(document).ready(function(){
         $('.form-reg').hide();
         $('.form-enter').hide();
         $('.header-title').hide();
-         $('.header-developers__text').hide();
+        $('.header-developers__text').hide();
         $('.header-about__text').show();
     });
     
