@@ -2,11 +2,13 @@ $(document).ready(function(){
     $('.form-enter').hide();  
     $('.form-reg').hide();
     $('.header-about__text').hide();
+    $('.header-developers__text').hide();
     
     $('.header-menu__block:last').click(function(){
         $('.form-reg').hide();
         $('.header-title').hide();
         $('.header-about__text').hide();
+        $('.header-developers__text').hide();
         $('.form-enter').show();
     });
     
@@ -14,6 +16,7 @@ $(document).ready(function(){
         $('.form-reg').hide();
         $('.form-enter').hide();
         $('.header-title').hide();
+         $('.header-developers__text').hide();
         $('.header-about__text').show();
     });
     
@@ -21,7 +24,16 @@ $(document).ready(function(){
         $('.form-reg').hide();
         $('.form-enter').hide();
         $('.header-about__text').hide();
+        $('.header-developers__text').hide();
         $('.header-title').show();
+    });
+    
+    $('.footer-menu__block').click(function(){
+        $('.form-reg').hide();
+        $('.form-enter').hide();
+        $('.header-about__text').hide();
+        $('.header-title').hide();
+        $('.header-developers__text').show();
     });
     
     $('.form-enter__close').mousemove(function(){

@@ -60,6 +60,24 @@ body, .header, .footer {
     font-family: 'Raleway', fantasy;
 }
 
+.header-developers__text {
+    font-size: 45px;
+    color: white;
+    padding-top: 100px;
+    text-align: center;
+    font-family: 'Raleway', fantasy;
+}
+
+.header-developers__contacts {
+    font-size: 25px;
+    list-style: none;
+}
+
+.header-developers__link {
+    color: white;
+    text-decoration: none;
+}
+
 .form-enter, .form-reg {
     position: absolute;
     margin: 5% 40% 5% 40%;
