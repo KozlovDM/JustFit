@@ -37,17 +37,24 @@ func Download(write http.ResponseWriter, request *http.Request) {
 	image := request.FormValue("image")
 	video := request.FormValue("video")
 	login := request.FormValue("login")
+	var NameCollection string
 
 	if !WorkWithBD.IsLoginExist(login) {
 		JSONResponse.ResponseWhithMessage(write, "Неккоректные данные", http.StatusBadRequest)
 		return
 	}
 
-	if image == "" || video == "" {
-		JSONResponse.ResponseWhithMessage(write, "Неккоректныеданные", http.StatusBadRequest)
-		return
+	if image == "" {
+		if video == "" {
+			JSONResponse.ResponseWhithMessage(write, "Неккоректные данные", http.StatusBadRequest)
+			return
+		}
+		NameCollection = "video"
+	} else {
+		NameCollection = "image"
 	}
-	result, err := WorkWithBD.GetFiles(login)
+	NameCollection += login
+	result, err := WorkWithBD.GetFiles(NameCollection)
 	if err != nil {
 		JSONResponse.ResponseWhithMessage(write, "Внутренняя ошибка", http.StatusInternalServerError)
 		return

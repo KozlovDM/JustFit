@@ -52,7 +52,6 @@ func SingIn(write http.ResponseWriter, request *http.Request) {
 	phone := request.PostFormValue("phone")
 	login := request.PostFormValue("login")
 	password := request.FormValue("password")
-
 	var result WorkWithBD.User
 
 	if WorkWithBD.IsPhoneExist(phone) {

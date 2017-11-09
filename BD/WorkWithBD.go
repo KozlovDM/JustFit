@@ -11,15 +11,27 @@ import (
 
 //Users
 type User struct {
+	//ID           bson.ObjectId `json:"id" bson:"_id, omitempty"`
 	Name         string
 	Login        string
 	Phone        string
 	HashPassword []byte
-	Store        mgo.GridFS
 }
 
 //SessionMongo
 var SessionMongo *mgo.Session
+
+func DeleteData(NameCollection string) error {
+	stream := SessionMongo.DB("JustFit").C(NameCollection)
+	err := stream.DropCollection()
+	return err
+}
+
+func DeleteUser(NameCollection string, NameDeleted string) error {
+	stream := SessionMongo.DB("JustFit").C(NameCollection)
+	err := stream.Remove(bson.M{"name": NameDeleted})
+	return err
+}
 
 //AddUser
 func AddUser(fullname string, login string, phone string, password []byte) error {
@@ -33,6 +45,7 @@ func FindUserPhone(phone string) User {
 	stream := SessionMongo.DB("JustFit").C("Users")
 	result := User{}
 	_ = stream.Find(bson.M{"phone": phone}).One(&result)
+	//fmt.Println(result.ID)
 	return result
 }
 
@@ -95,7 +108,6 @@ func GetFiles(Name string) (map[string][]byte, error) {
 	result := make(map[string][]byte)
 	var image *mgo.GridFile
 	for stream.OpenNext(iter, &image) {
-
 		b := make([]byte, image.Size())
 		_, err := image.Read(b)
 		if err != nil {
