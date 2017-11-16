@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    background: #e3e8e6;
 }
 
 .header {
@@ -30,8 +31,92 @@ body {
     color: white;
     letter-spacing: 1px;
     text-decoration: none;
+    font-family: 'Gloria Hallelujah', cursive;
 }
 
 .header-menu__link:hover {
     background: #575454;
+}
+
+.main {
+    background: #e3e8e6;
+}
+
+.main-profile {
+    display: flex;
+    height: 200px;
+    font-family: 'Raleway', cursive;
+}
+
+.main-profile__avatar {
+    height: 152px;
+    width: 152px;
+    padding: 24px;
+    padding-left: 24px;
+    background-image: url(images/avatar.jpg);
+    background-clip: content-box;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.main-profile__info {
+    height: 200px;
+    width: calc(100% - 200px);
+}
+
+.main-profile__info__sec1 {
+    display: flex;
+    height: 50px;
+}
+
+.sec1__nickname {
+    margin: 10px;
+    margin-left: 10px;
+    font-size: 30px;
+}
+
+.sec1__edit {
+    font-size: 17px;
+    margin-top: 22px;
+    margin-left: 10px;
+    color: black;
+    text-decoration: none;
+}
+
+.main-profile__info__sec2 {
+    height: 75px;
+}
+
+.main-profile__info__sec2__stat {
+    margin: 0;
+    padding: calc(57px / 2);
+    list-style: none;
+    word-spacing: 5px;
+}
+
+ul.main-profile__info__sec2__stat > li {
+    display: inline;
+}
+
+.subscriber_amount, .subscription_amount {
+    color: black;
+    text-decoration: none;
+}
+
+.main-profile__info__about {
+    display: flex;
+    height: 75px;
+}
+
+.about__fullname {
+    margin: 25px;
+    margin-left: 10px;
+    font-size: 25px;
+}
+
+.about_me {
+    font-size: 17px;
+    margin-top: 32px;
+    margin-left: 10px;
 }
