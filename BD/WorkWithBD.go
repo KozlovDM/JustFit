@@ -11,11 +11,26 @@ import (
 
 //Users
 type User struct {
-	//ID           bson.ObjectId `json:"id" bson:"_id, omitempty"`
 	Name         string
 	Login        string
 	Phone        string
 	HashPassword []byte
+}
+
+type Subscribers struct {
+	Login      string
+	Subscriber string
+}
+
+type Likes struct {
+	Image string
+	Login string
+}
+
+type Comments struct {
+	Image   string
+	Login   string
+	Comment string
 }
 
 //SessionMongo
@@ -27,9 +42,15 @@ func DeleteData(NameCollection string) error {
 	return err
 }
 
-func DeleteUser(NameCollection string, NameDeleted string) error {
-	stream := SessionMongo.DB("JustFit").C(NameCollection)
+func DeleteUser(NameDeleted string) error {
+	stream := SessionMongo.DB("JustFit").C("Users")
 	err := stream.Remove(bson.M{"name": NameDeleted})
+	return err
+}
+
+func DeleteSub(login string, subscriber string) error {
+	stream := SessionMongo.DB("JustFit").C("Subscribers")
+	err := stream.Remove(bson.M{"login": login, "subscriber": subscriber})
 	return err
 }
 
@@ -38,6 +59,42 @@ func AddUser(fullname string, login string, phone string, password []byte) error
 	stream := SessionMongo.DB("JustFit").C("Users")
 	err := stream.Insert(&User{Name: fullname, Login: login, Phone: phone, HashPassword: password})
 	return err
+}
+
+func NewSub(login string, subscriber string) error {
+	stream := SessionMongo.DB("JustFit").C("Subscribers")
+	err := stream.Insert(&Subscribers{Login: login, Subscriber: subscriber})
+	return err
+}
+
+func NewLike(imageName string, login string) error {
+	stream := SessionMongo.DB("JustFit").C("Likes")
+	err := stream.Insert(&Likes{Image: imageName, Login: login})
+	return err
+}
+
+func NewComments(imageName string, login string, comment string) error {
+	stream := SessionMongo.DB("JustFit").C("Comments")
+	err := stream.Insert(&Comments{Image: imageName, Login: login, Comment: comment})
+	return err
+}
+
+func FindSub(login string) (result []Subscribers, err error) {
+	stream := SessionMongo.DB("JustFit").C("Subscribers")
+	err = stream.Find(bson.M{"login": login}).All(&result)
+	return result, err
+}
+
+func FindLikes(imageName string) (result []Likes, err error) {
+	stream := SessionMongo.DB("JustFit").C("Likes")
+	err = stream.Find(bson.M{"image": imageName}).All(&result)
+	return result, err
+}
+
+func FindComments(imageName string) (result []Comments, err error) {
+	stream := SessionMongo.DB("JustFit").C("Comments")
+	err = stream.Find(bson.M{"image": imageName}).All(&result)
+	return result, err
 }
 
 //FindUserPhone
