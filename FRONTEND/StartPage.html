@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="css/stylesStart.css">
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/forms.js"></script>
+        <script src="js/answerExecution.js"></script>
     </head>
     <body>
         <header class="header">
@@ -58,6 +59,7 @@
                         <input type="tel" name="phone" placeholder="8-(xxx)-(xxx)-(xxxx)" required pattern="8[0-9]{3}[0-9]{3}[0-9]{4}"/><br/>
                         <input type="password" name="password" placeholder="Пароль" required pattern="[a-z, A-Z, 0-9]{7}"/><br/>
                         <button type="submit">Войти</button> 
+                        <p id="signup-response"></p>
                     </form>
                     <a href="#reg" class="form-enter__regTitle">Зарегистрироваться</a>
                 </div>
@@ -65,7 +67,7 @@
                 <div class="form-reg">
                     <div class="form-reg__close"></div>
                     <div class="form-reg__title"><h1>Регистрация</h1></div>
-                    <form action="http://192.168.56.1:3000/SignUp" method="POST">
+                    <form action="http://192.168.56.1:3000/SignUp" method="POST" id="regForm">
                         <input type="tel" name="phone" placeholder="8-(xxx)-(xxx)-(xxxx)" required pattern="8[0-9]{3}[0-9]{3}[0-9]{4}"/><br/>
                         <input type="text" name="fullname" placeholder="Имя и Фамилия" required/><br/>
                         <input type="text" name="login" placeholder="Имя пользователя" required/><br/>
