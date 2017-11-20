@@ -4,7 +4,9 @@ $(document).ready(function(){
             var form = $(this),
                 formData = form.serialize(),
                 formUrl = "http://192.168.56.1:3000/SignUp",
-                formMethod = form.attr('method');
+                formMethod = form.attr('method'),
+                code = 0;
+                
                 
             form.data('formstatus','submitting');
             $.ajax({
@@ -12,11 +14,18 @@ $(document).ready(function(){
                 type: formMethod,
                 data: formData,
                 success:function(data){
-                    var responseData = jQuery.parseJSON(data);
-                    alert(data);     
+                    var responseData = jQuery.parseJSON(data);  
+                    code = data.statusCode;
                 }
             });
-            window.location.href = form.attr('action');
+            
+            switch(code){
+                case 200:
+                    window.location.href = form.attr('action');
+                    break;
+                default:
+                    alert("Такой пользователь уже зарегистрирован!");
+                    break;
         }
         return false;
     });
