@@ -12,7 +12,7 @@ $(document).ready(function(){
                 type: formMethod,
                 data: formData,
                 success:function(data){  
-                    window.location.href = "C:\Users\kasty\Documents\GitHub\JustFit\FRONTEND\UserPage.html";
+                    window.location.href = "UserPage.html";
                 },
                 error:function(jqxhr, status, errorMsg){
                     alert("Status: " + status + " Error: " + errorMsg);
