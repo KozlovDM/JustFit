@@ -4,18 +4,20 @@ $(document).ready(function(){
             var form = $(this),
                 formData = form.serialize(),
                 formUrl = form.attr('action'),
-                formMethod = form.attr('method');                
+                formMethod = "http://192.168.56.1:3000/SignUp";
                 
             form.data('formstatus','submitting');
             $.ajax({
                 url: formUrl,
                 type: formMethod,
                 data: formData,
-                success:function(data){  
-                    window.location.href = "UserPage.html";
-                },
-                error:function(jqxhr, status, errorMsg){
-                    alert("Status: " + status + " Error: " + errorMsg);
+                statusCode: {
+                    200: function() {                    
+                        window.location.href = form.attr('action');   
+                    },
+                    404: function(status, errorMsg) {
+					    alert("Статус: " + status + " Ошибка: " + errorMsg);
+                    }
                 }
             });
         }
