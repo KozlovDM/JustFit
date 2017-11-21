@@ -3,29 +3,21 @@ $(document).ready(function(){
         if($(this).data('formstatus') !== 'submitting'){
             var form = $(this),
                 formData = form.serialize(),
-                formUrl = "http://192.168.56.1:3000/SignUp",
-                formMethod = form.attr('method'),
-                code = 0;
-                
+                formUrl = form.attr('action'),
+                formMethod = form.attr('method');                
                 
             form.data('formstatus','submitting');
             $.ajax({
                 url: formUrl,
                 type: formMethod,
                 data: formData,
-                success:function(data){
-                    var responseData = jQuery.parseJSON(data);  
-                    code = data.statusCode;
+                success:function(data){  
+                    window.location.href = "C:\Users\kasty\Documents\GitHub\JustFit\FRONTEND\UserPage.html";
+                },
+                error:function(jqxhr, status, errorMsg){
+                    alert("Status: " + status + " Error: " + errorMsg);
                 }
             });
-            
-            switch(code){
-                case 200:
-                    window.location.href = form.attr('action');
-                    break;
-                default:
-                    alert("Такой пользователь уже зарегистрирован!");
-                    break;
         }
         return false;
     });
