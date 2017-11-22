@@ -37,7 +37,6 @@ func SingUp(write http.ResponseWriter, request *http.Request) {
 		return
 	}
 	//Проверка Работоспособности телефона
-
 	err = WorkWithBD.AddUser(fullname, login, phone, hashPassword)
 	if err != nil {
 		JSONResponse.ResponseWhithMessage(write, "Внутренняя ошибка", http.StatusInternalServerError)
