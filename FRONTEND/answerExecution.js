@@ -4,20 +4,41 @@ $(document).ready(function(){
             var form = $(this),
                 formData = form.serialize(),
                 formUrl = form.attr('action'),
-                formMethod = "http://192.168.56.1:3000/SignUp";
+                formMethod = form.attr('method');
                 
             form.data('formstatus','submitting');
             $.ajax({
                 url: formUrl,
                 type: formMethod,
                 data: formData,
-                statusCode: {
-                    200: function() {                    
-                        window.location.href = form.attr('action');   
-                    },
-                    404: function(status, errorMsg) {
-					    alert("Статус: " + status + " Ошибка: " + errorMsg);
-                    }
+                success:function(){
+                    window.location.href = "UserPage.html";
+                },
+                error:function(status, errorMsg){
+                    alert("Такой пользователь уже существует!");
+                }
+            });
+        }
+        return false;
+    });
+    
+    $('#enterForm').submit(function(){
+        if($(this).data('formstatus') !== 'submitting'){
+            var form = $(this),
+                formData = form.serialize(),
+                formUrl = form.attr('action'),
+                formMethod = form.attr('method');
+                
+            form.data('formstatus','submitting');
+            $.ajax({
+                url: formUrl,
+                type: formMethod,
+                data: formData,
+                success:function(){
+                    window.location.href = "UserPage.html";
+                },
+                error:function(status, errorMsg){
+                    alert("Неправильный номр или пароль!");
                 }
             });
         }
