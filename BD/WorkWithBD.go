@@ -14,6 +14,8 @@ type User struct {
 	Name         string
 	Login        string
 	Phone        string
+	Publication  int
+	Info         string
 	HashPassword []byte
 }
 
@@ -57,7 +59,15 @@ func DeleteSub(login string, subscriber string) error {
 //AddUser
 func AddUser(fullname string, login string, phone string, password []byte) error {
 	stream := SessionMongo.DB("JustFit").C("Users")
-	err := stream.Insert(&User{Name: fullname, Login: login, Phone: phone, HashPassword: password})
+	err := stream.Insert(&User{Name: fullname, Login: login, Phone: phone, HashPassword: password, Publication: 0})
+	return err
+}
+
+func AddInfo(phone string, info string) error {
+	stream := SessionMongo.DB("JustFit").C("Users")
+	colQuerier := bson.M{"phone": phone}
+	change := bson.M{"info": info}
+	err := stream.Update(colQuerier, change)
 	return err
 }
 
@@ -85,6 +95,12 @@ func FindSub(login string) (result []Subscribers, err error) {
 	return result, err
 }
 
+func FindSubscriptions(login string) (result []Subscribers, err error) {
+	stream := SessionMongo.DB("JustFit").C("Subscribers")
+	err = stream.Find(bson.M{"subscriber": login}).All(&result)
+	return result, err
+}
+
 func FindLikes(imageName string) (result []Likes, err error) {
 	stream := SessionMongo.DB("JustFit").C("Likes")
 	err = stream.Find(bson.M{"image": imageName}).All(&result)
@@ -102,7 +118,6 @@ func FindUserPhone(phone string) User {
 	stream := SessionMongo.DB("JustFit").C("Users")
 	result := User{}
 	_ = stream.Find(bson.M{"phone": phone}).One(&result)
-	//fmt.Println(result.ID)
 	return result
 }
 
@@ -134,6 +149,20 @@ func IsLoginExist(login string) bool {
 		return false
 	}
 	return true
+}
+
+func NewPublication(login string) error {
+	stream := SessionMongo.DB("JustFit").C("Users")
+	user := User{}
+	err := stream.Find(bson.M{"login": login}).One(&user)
+	if err != nil {
+		return err
+	}
+	count := user.Publication + 1
+	colQuerier := bson.M{"login": login}
+	change := bson.M{"publication": count}
+	err = stream.Update(colQuerier, change)
+	return err
 }
 
 func UploadFile(f *multipart.FileHeader, NameCollection string) error {

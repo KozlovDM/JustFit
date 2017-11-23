@@ -28,7 +28,16 @@ func Upload(write http.ResponseWriter, request *http.Request) {
 		return
 	}
 	NameCollection += login
-	WorkWithBD.UploadFile(handler, NameCollection)
+	err = WorkWithBD.UploadFile(handler, NameCollection)
+	if err != nil {
+		JSONResponse.ResponseWhithMessage(write, "Внутренняя ошибка", http.StatusInternalServerError)
+		return
+	}
+	err = WorkWithBD.NewPublication(login)
+	if err != nil {
+		JSONResponse.ResponseWhithMessage(write, "Внутренняя ошибка", http.StatusInternalServerError)
+		return
+	}
 	JSONResponse.ResponseWhithMessage(write, "Успешная загрузка", http.StatusOK)
 }
 
