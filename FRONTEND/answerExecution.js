@@ -1,10 +1,13 @@
 $(document).ready(function(){
+    window.Storage = {};
     $('#regForm').submit(function(){
         if($(this).data('formstatus') !== 'submitting'){
             var form = $(this),
                 formData = form.serialize(),
                 formUrl = form.attr('action'),
                 formMethod = form.attr('method');
+            
+            window.Storage.phone = formData.phone;
                 
             form.data('formstatus','submitting');
             $.ajax({
@@ -14,8 +17,9 @@ $(document).ready(function(){
                 success:function(){
                     window.location.href = "UserPage.html";
                 },
-                error:function(status, errorMsg){
+                error:function(){
                     alert("Такой пользователь уже существует!");
+                    
                 }
             });
         }
@@ -28,6 +32,8 @@ $(document).ready(function(){
                 formData = form.serialize(),
                 formUrl = form.attr('action'),
                 formMethod = form.attr('method');
+            
+            window.Storage.phone = formData.phone;
                 
             form.data('formstatus','submitting');
             $.ajax({
@@ -37,7 +43,7 @@ $(document).ready(function(){
                 success:function(){
                     window.location.href = "UserPage.html";
                 },
-                error:function(status, errorMsg){
+                error:function(){
                     alert("Неправильный номр или пароль!");
                 }
             });
