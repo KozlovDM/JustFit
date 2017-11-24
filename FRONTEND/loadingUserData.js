@@ -15,22 +15,22 @@ $(document).ready(function(){
                 $('.about_me').text(data.info);
             }    
             
-            $.ajax({
+            /*$.ajax({
                 url: 'http://192.168.56.1:3000/GetUserAvatar',
                 type: 'POST',
                 data: window.Storage.phone,
                 success:function(data){
-                    /*var userAvatar = ;*/  
+                    var userAvatar = ; 
                     
                     
                 },
                 error:function(status, errorMsg){
-                    alert("Статус: " + status " Ошибка: " + errorMsg);
+                    alert("Статус: " + status + " Ошибка: " + errorMsg);
                 }
-            });
+            });*/
         },
         error:function(status, errorMsg){
-            alert("Статус: " + status " Ошибка: " + errorMsg);
+            alert("Статус: " + status + " Ошибка: " + errorMsg);
         }
     });
 });

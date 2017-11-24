@@ -7,7 +7,7 @@ $(document).ready(function(){
                 formUrl = form.attr('action'),
                 formMethod = form.attr('method');
             
-            window.Storage.phone = formData.phone;
+            window.Storage.phone = $('input[name="phone"]').val();
                 
             form.data('formstatus','submitting');
             $.ajax({
@@ -33,7 +33,7 @@ $(document).ready(function(){
                 formUrl = form.attr('action'),
                 formMethod = form.attr('method');
             
-            window.Storage.phone = formData.phone;
+            window.Storage.phone = $('input[name="phone"]').val();
                 
             form.data('formstatus','submitting');
             $.ajax({
@@ -44,7 +44,7 @@ $(document).ready(function(){
                     window.location.href = "UserPage.html";
                 },
                 error:function(){
-                    alert("Неправильный номр или пароль!");
+                    alert("Неправильный номер или пароль!");
                 }
             });
         }
