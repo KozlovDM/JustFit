@@ -15,8 +15,7 @@ $(document).ready(function(){
                     window.location.href = "UserPage.html" + "?" + $('input[name="phone"]').val();
                 },
                 error:function(){
-                    alert("Такой пользователь уже существует!");
-                    
+                    alert("Такой пользователь уже существует!");            
                 }
             });
         }

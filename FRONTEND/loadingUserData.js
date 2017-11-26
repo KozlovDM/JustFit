@@ -3,16 +3,15 @@ $(document).ready(function(){
     $.ajax({
         url: 'http://192.168.56.1:3000/GetUserData',
         type: 'POST',
-        data: phone,
+        data: {phone: phone},
         success:function(data){
-            var userData = jQuery.parseJSON(data);
-            $('.sec1__nickname').text(userData.login);
-            $('.publication_amount').text('Публикации: ' + userData.publications);
-            $('.subscriber_amount').text('Подписчики: ' + userData.subscribers);
-            $('.subscription_amount').text('Подписки: ' + userData.subscriptions);
-            $('.about__fullname').text(userData.fullname);
+            $('.sec1__nickname').text(data.login);
+            $('.publication_amount').text('Публикации: ' + data.publications);
+            $('.subscriber_amount').text('Подписчики: ' + data.subscribers);
+            $('.subscription_amount').text('Подписки: ' + data.subscriptions);
+            $('.about__fullname').text(data.fullname);
             if (data.info != null){
-                $('.about_me').text(userData.info);
+                $('.about_me').text(data.info);
             }    
             
             /*$.ajax({
