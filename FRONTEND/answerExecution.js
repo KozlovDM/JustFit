@@ -12,7 +12,7 @@ $(document).ready(function(){
                 type: formMethod,
                 data: formData,
                 success:function(){
-                    window.location.href = "UserPage.html" + "?" + $('input[name="phone"]').val();
+                    window.location.href = "UserPage.html" + "?" + $('#regForm input[name="phone"]').val();
                 },
                 error:function(){
                     alert("Такой пользователь уже существует!");            
@@ -35,7 +35,7 @@ $(document).ready(function(){
                 type: formMethod,
                 data: formData,
                 success:function(){
-                    window.location.href = "UserPage.html" + "?" + $('input[name="phone"]').val();
+                    window.location.href = "UserPage.html" + "?" + $('#enterForm input[name="phone"]').val();
                 },
                 error:function(){
                     alert("Неправильный номер или пароль!");
