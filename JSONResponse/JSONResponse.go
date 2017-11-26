@@ -4,6 +4,7 @@ import (
 	"JustFit/BD"
 	"encoding/json"
 	"net/http"
+	"strconv"
 )
 
 func ResponseWhithData(w http.ResponseWriter, json []byte, code int) {
@@ -33,10 +34,10 @@ func ResponseInfo(w http.ResponseWriter, user WorkWithBD.User, subscriptions int
 	data := make(map[string]string)
 	data["login"] = user.Login
 	data["fullname"] = user.Name
-	data["publication"] = string(user.Publication)
+	data["publications"] = strconv.Itoa(user.Publication)
 	data["info"] = user.Info
-	data["subscriptions"] = string(subscriptions)
-	data["subscribers"] = string(subscribers)
+	data["subscriptions"] = strconv.Itoa(subscriptions)
+	data["subscribers"] = strconv.Itoa(subscribers)
 	json, err := json.Marshal(data)
 	if err != nil {
 		panic(err)

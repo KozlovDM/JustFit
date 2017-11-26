@@ -9,8 +9,19 @@ import (
 func Subscribe(write http.ResponseWriter, request *http.Request) {
 	subscriber := request.PostFormValue("subscriber")
 	login := request.PostFormValue("login")
+	if subscriber == login {
+		JSONResponse.ResponseWhithMessage(write, "Неверный данные", http.StatusBadRequest)
+		return
+	}
 	if WorkWithBD.IsLoginExist(login) && WorkWithBD.IsLoginExist(subscriber) {
-		err := WorkWithBD.NewSub(login, subscriber)
+		sub, err := WorkWithBD.FindSub(login)
+		for _, v := range sub {
+			if v.Subscriber == subscriber {
+				JSONResponse.ResponseWhithMessage(write, "Вы уже подписаны", http.StatusBadRequest)
+				return
+			}
+		}
+		err = WorkWithBD.NewSub(login, subscriber)
 		if err != nil {
 			JSONResponse.ResponseWhithMessage(write, "Внутренняя ошибка", http.StatusInternalServerError)
 			return
@@ -48,5 +59,5 @@ func UserInfo(write http.ResponseWriter, request *http.Request) {
 	for _ = range sub {
 		subscriptions++
 	}
-
+	JSONResponse.ResponseInfo(write, user, subscriptions, subscribers)
 }

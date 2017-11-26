@@ -26,7 +26,7 @@ func SingUp(write http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	if WorkWithBD.IsLoginExist(phone) {
+	if WorkWithBD.IsLoginExist(login) {
 		JSONResponse.ResponseWhithMessage(write, "Такой логин уже существует", http.StatusConflict)
 		return
 	}
