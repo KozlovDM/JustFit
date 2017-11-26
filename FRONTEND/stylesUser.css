@@ -85,7 +85,7 @@ body {
 }
 
 .main-profile__info__sec2 {
-    height: 75px;
+    height: 50px;
 }
 
 .main-profile__info__sec2__stat {
@@ -104,19 +104,29 @@ ul.main-profile__info__sec2__stat > li {
     text-decoration: none;
 }
 
-.main-profile__info__about {
+.main-profile__info__sec3 {
     display: flex;
-    height: 75px;
+    height: 50px;
 }
 
 .about__fullname {
-    margin: 25px;
+    margin: 10px;
     margin-left: 10px;
-    font-size: 25px;
+    font-size: 30px;
 }
 
 .about_me {
     font-size: 17px;
-    margin-top: 32px;
+    margin-top: 22px;
     margin-left: 10px;
+}
+
+.main-profile__info__sec4 {
+    height: 50px;
+}
+
+.uploadForm {
+    margin-top: 0px;
+    padding-top: 20px;
+    font-family: 'Gloria Hallelujah', fantasy;
 }
