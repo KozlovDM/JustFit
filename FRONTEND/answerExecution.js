@@ -7,7 +7,7 @@ $(document).ready(function(){
                 formUrl = form.attr('action'),
                 formMethod = form.attr('method');
             
-            window.Storage.phone = $('input[name="phone"]').val();
+            localStorage.setItem("phone", $('input[name="phone"]').val());
                 
             form.data('formstatus','submitting');
             $.ajax({
@@ -33,8 +33,8 @@ $(document).ready(function(){
                 formUrl = form.attr('action'),
                 formMethod = form.attr('method');
             
-            window.Storage.phone = $('input[name="phone"]').val();
-                
+            localStorage.setItem("phone", $('input[name="phone"]').val());
+            
             form.data('formstatus','submitting');
             $.ajax({
                 url: formUrl,
