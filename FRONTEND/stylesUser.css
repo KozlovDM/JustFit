@@ -125,10 +125,13 @@ ul.main-profile__info__sec2__stat > li {
     height: 50px;
 }
 
-.uploadForm {
-    margin-top: 0px;
-    padding-top: 20px;
-    font-family: 'Gloria Hallelujah', fantasy;
+#uploadFile, #clickbutton {
+    font-family: 'Gloria Hallelujah', cursive;
+}
+
+#uploadFile {
+    padding-left: 10px;
+    padding-top: 15px;
 }
 
 .main-collage {
