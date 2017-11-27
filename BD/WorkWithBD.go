@@ -160,31 +160,44 @@ func NewPublication(login string) error {
 	}
 	count := user.Publication + 1
 	colQuerier := bson.M{"login": login}
-	change := bson.M{"publication": count}
+	change := bson.M{"$set": bson.M{"publication": count}}
 	err = stream.Update(colQuerier, change)
 	return err
 }
 
-func UploadFile(f *multipart.FileHeader, NameCollection string) error {
+func UploadFile(f *multipart.FileHeader, NameCollection string) (interface{}, error) {
 	NameFile := NameCollection + f.Filename
 	db := SessionMongo.DB("JustFit")
 	file, err := f.Open()
 	if err != nil {
-		return err
+		return nil, err
 	}
 	GridFile, err := db.GridFS(NameCollection).Create(NameFile)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	_, err = io.Copy(GridFile, file)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	err = GridFile.Close()
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	return GridFile.Id(), nil
+}
+
+func GetFile(Name string, id interface{}) ([]byte, error) {
+	file, err := SessionMongo.DB("JustFit").GridFS(Name).OpenId(id)
+	if err != nil {
+		return nil, err
+	}
+	b := make([]byte, file.Size())
+	_, err = file.Read(b)
+	if err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func GetFiles(Name string) (map[string][]byte, error) {

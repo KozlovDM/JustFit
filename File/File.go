@@ -3,6 +3,7 @@ package File
 import (
 	"JustFit/BD"
 	"JustFit/JSONResponse"
+	"fmt"
 	"net/http"
 )
 
@@ -22,23 +23,30 @@ func Upload(write http.ResponseWriter, request *http.Request) {
 		NameCollection = "image"
 	}
 
-	login := request.FormValue("login")
-	if !WorkWithBD.IsLoginExist(login) {
+	phone := request.FormValue("phone")
+	user := WorkWithBD.FindUserPhone(phone)
+	if !WorkWithBD.IsLoginExist(user.Login) {
 		JSONResponse.ResponseWhithMessage(write, "Неккоректные данные", http.StatusBadRequest)
 		return
 	}
-	NameCollection += login
-	err = WorkWithBD.UploadFile(handler, NameCollection)
+	NameCollection += user.Login
+	id, err := WorkWithBD.UploadFile(handler, NameCollection)
 	if err != nil {
 		JSONResponse.ResponseWhithMessage(write, "Внутренняя ошибка", http.StatusInternalServerError)
 		return
 	}
-	err = WorkWithBD.NewPublication(login)
+	err = WorkWithBD.NewPublication(user.Login)
 	if err != nil {
 		JSONResponse.ResponseWhithMessage(write, "Внутренняя ошибка", http.StatusInternalServerError)
 		return
 	}
-	JSONResponse.ResponseWhithMessage(write, "Успешная загрузка", http.StatusOK)
+	file, err := WorkWithBD.GetFile(NameCollection, id)
+	if err != nil {
+		fmt.Println(err)
+		JSONResponse.ResponseWhithMessage(write, "Внутренняя ошибка", http.StatusInternalServerError)
+		return
+	}
+	JSONResponse.ResponseWhithData(write, file, http.StatusOK)
 }
 
 func Download(write http.ResponseWriter, request *http.Request) {
