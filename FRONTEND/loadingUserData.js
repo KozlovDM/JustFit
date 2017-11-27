@@ -41,7 +41,7 @@ $(document).ready(function(){
             
             $(this).data('formstatus','submitting');
             $.ajax({
-                url: 'http://192.168.56.1:3000/',
+                url: 'http://192.168.56.1:3000/download',
                 type: form.attr('method'),
                 contentType: false,
                 processData: false,
