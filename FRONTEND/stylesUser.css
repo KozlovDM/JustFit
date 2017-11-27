@@ -130,3 +130,41 @@ ul.main-profile__info__sec2__stat > li {
     padding-top: 20px;
     font-family: 'Gloria Hallelujah', fantasy;
 }
+
+.main-collage {
+    width: 80%;
+    margin: 12px auto;
+    overflow: hidden;
+}
+
+.publication {
+    color: #e3e8e6;
+    float: left;
+    width: 21%;
+    margin:  2% 2% 5px 2%;
+}
+
+.publication img {
+    max-width: 100%;
+}
+
+@media only screen and (max-width : 940px),
+only screen and (max-device-width : 940px){
+    .publication {width: 21%;}
+}
+  
+@media only screen and (max-width : 720px),
+only screen and (max-device-width : 720px){
+    .publication {width: 29.33333%;}
+}
+  
+@media only screen and (max-width : 530px),
+only screen and (max-device-width : 530px){
+    .publication {width: 46%;}
+}
+  
+@media only screen and (max-width : 320px),
+only screen and (max-device-width : 320px){
+    .publication {width: 96%;}
+    .publication img {width: 96%;}
+}

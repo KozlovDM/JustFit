@@ -32,26 +32,33 @@ $(document).ready(function(){
         }
     });
     
-    /*$('#uploadForm').submit(function(){
-        if($(this).data('formstatus') !== 'submitting'){
+    $('#uploadForm').on('submit', function(event){
+        if ($(this).data('formstatus') !== 'submitting' &&  window.FormData !== undefined) {
+            event.preventDefault();
             var form = $(this),
-                formData = form.serialize(),
-                formUrl = form.attr('action'),
-                formMethod = form.attr('method');
-                
-            form.data('formstatus','submitting');
+                formData = new FormData(form.get(0));
+            formData.append("phone", phone);
+            
+            $(this).data('formstatus','submitting');
             $.ajax({
                 url: 'http://192.168.56.1:3000/',
-                type: formMethod,
+                type: form.attr('method'),
+                contentType: false,
+                processData: false,
                 data: formData,
-                success:function(){
-                    
+                dataType: 'json',
+                success: function(data){
+                    var ref = '"' + data[0] + '"';
+                    var block = '<div class="publication"><a href=' + ref + ' target="_blank"><img src=' + ref + '></a></div>';
+                    $('.header-menu__link:eq(1)').click(function(){
+                        $('.main-collage').append(block);
+                    });
                 },
-                error:function(){
-                    alert("Файл не может быть загружен!"); 
+                error: function() {
+                    alert("Файл не может быть загружен!");
                 }
             });
         }
         return false;
-    });*/
+    });
 });
