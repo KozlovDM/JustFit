@@ -32,31 +32,32 @@ $(document).ready(function(){
         }
     });
     
-    $('#clickbutton').on('click', function(event){
-        event.preventDefault();
-        var file = document.getElementById('uploadFile').files;
-        if (files.length !== 0){
-            if (window.FormData !== undefined){
-                var data = new FormData();
-                data.append("file", files[0]);
-                data.append("phone", phone);
-                
-                $.ajax({
-                    type: 'POST',
-                    url: 'http://192.168.56.1:3000/Upload',
-                    contentType: false,
-                    processData: false,
-                    data: data,
-                    success: function(data){
-                        var ref = '"' + data + '"';
-                        var block = '<div class="publication"><a href=' + ref + ' target="_blank"><img src=' + ref + '></a></div>';
-                        $('.main-collage').append(block);
-                    },
-                    error: function(){
-                        alert("Файл не может быть загружен!");
-                    }
-                });
-            }
-        }
+    $('#clickbutton').on('click', function(event){ 
+        event.preventDefault(); 
+        var file = document.getElementById('uploadFile').files; 
+        if (file.length !== 0){ 
+            if (window.FormData !== undefined){ 
+                var data = new FormData(); 
+                data.append("file", file[0]); 
+                data.append("phone", phone); 
+
+                $.ajax({ 
+                    type: 'POST', 
+                    url: 'http://192.168.56.1:3000/Upload', 
+                    contentType: false, 
+                    processData: false, 
+                    data: data, 
+                    success: function(data){ 
+                        var base64 = data.image; 
+                        var ref = '"data:image/jpeg;base64,' + base64 + '"'; 
+                        var block = '<div class="publication"><a href=' + ref + ' target="_blank"><img src=' + ref + '></a></div>'; 
+                        $('.main-collage').append(block); 
+                    }, 
+                    error: function(){ 
+                        alert("Файл не может быть загружен!"); 
+                    } 
+                }); 
+            } 
+        } 
     });       
 });
