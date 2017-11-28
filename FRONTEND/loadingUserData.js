@@ -14,18 +14,29 @@ $(document).ready(function(){
                 $('.about_me').text(data.info);
             }    
             
-            /*$.ajax({
-                url: 'http://192.168.56.1:3000/GetUserAvatar',
+            $.ajax({
+                url: 'http://192.168.56.1:3000/Download',
                 type: 'POST',
                 data: phone,
                 success:function(data){
-                    var userAvatar = ; 
-                       
+                    if (data.avatar !== null){
+                        var ref = '"data:image/jpeg;base64,' + data.avatar + '"'; 
+                        $('#avatar').attr("src", ref);
+                    }
+                    if (data.publications !== 0){
+                        var base64, ref, block;
+                        for (var i = 1; i <= data.publications; i++){
+                            base64 = data.file(i); 
+                            ref = '"data:image/jpeg;base64,' + base64 + '"'; 
+                            block = '<div class="publication"><a href=' + ref + ' target="_blank"><img src=' + ref + '></a></div>'; 
+                            $('.main-collage').append(block);
+                        }
+                    }
                 },
                 error:function(status, errorMsg){
                     alert("Статус: " + status + " Ошибка: " + errorMsg);
                 }
-            });*/
+            });
         },
         error:function(status, errorMsg){
             alert("Статус: " + status + " Ошибка: " + errorMsg);

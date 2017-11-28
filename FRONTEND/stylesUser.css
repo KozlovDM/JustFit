@@ -53,11 +53,14 @@ body {
     width: 152px;
     padding: 24px;
     padding-left: 24px;
-    background-image: url(images/avatar.jpg);
-    background-clip: content-box;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-profile__avatar img {
+    width: 100%;
+    height: auto;
 }
 
 .main-profile__info {
