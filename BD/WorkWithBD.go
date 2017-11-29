@@ -1,6 +1,7 @@
 package WorkWithBD
 
 import (
+	"errors"
 	"io"
 	"log"
 	"mime/multipart"
@@ -187,6 +188,44 @@ func UploadFile(f *multipart.FileHeader, NameCollection string) (interface{}, er
 	return GridFile.Id(), nil
 }
 
+func UploadAvatar(f *multipart.FileHeader, login string) (interface{}, error) {
+	db := SessionMongo.DB("JustFit")
+	file, err := f.Open()
+	if err != nil {
+		return nil, err
+	}
+	GridFile, err := db.GridFS("Avatar").Create(login)
+	if err != nil {
+		return nil, err
+	}
+	_, err = io.Copy(GridFile, file)
+	if err != nil {
+		return nil, err
+	}
+	err = GridFile.Close()
+	if err != nil {
+		return nil, err
+	}
+	return GridFile.Id(), nil
+}
+
+func GetAvatar(login string) ([]byte, error) {
+	stream := SessionMongo.DB("JustFit").GridFS("Avatar")
+	iter := stream.Find(bson.M{"filename": login}).Iter()
+
+	var image *mgo.GridFile
+	if stream.OpenNext(iter, &image) {
+		b := make([]byte, image.Size())
+		_, err := image.Read(b)
+		if err != nil {
+			return nil, err
+		}
+		return b, nil
+	}
+	err := errors.New("Not Found")
+	return nil, err
+}
+
 func GetFile(Name string, id interface{}) ([]byte, error) {
 	file, err := SessionMongo.DB("JustFit").GridFS(Name).OpenId(id)
 	if err != nil {
@@ -200,21 +239,26 @@ func GetFile(Name string, id interface{}) ([]byte, error) {
 	return b, nil
 }
 
-func GetFiles(Name string) (map[string][]byte, error) {
+func GetFiles(Name string) (map[string]interface{}, int, error) {
 	stream := SessionMongo.DB("JustFit").GridFS(Name)
 	iter := stream.Find(nil).Iter()
 
-	result := make(map[string][]byte)
+	result := make(map[string]interface{})
 	var image *mgo.GridFile
+
+	i := 0
+	var name string
 	for stream.OpenNext(iter, &image) {
+		i++
+		name = "file" + string(i)
 		b := make([]byte, image.Size())
 		_, err := image.Read(b)
 		if err != nil {
-			return nil, err
+			return nil, i, err
 		}
-		result[image.Name()] = b
+		result[name] = b
 	}
-	return result, iter.Err()
+	return result, i, iter.Err()
 }
 
 func init() {

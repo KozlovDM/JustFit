@@ -7,11 +7,28 @@ import (
 	"strconv"
 )
 
-func ResponseWhithData(w http.ResponseWriter, json []byte, code int) {
+func ResponseWhithAllData(w http.ResponseWriter, data map[string]interface{}, code int) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(code)
-	w.Write(json)
+	js, err := json.Marshal(data)
+	if err != nil {
+		panic(err)
+	}
+	w.Write(js)
+}
+
+func ResponseWhithData(w http.ResponseWriter, jsonData []byte, code int) {
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.WriteHeader(code)
+	data := make(map[string][]byte)
+	data["image"] = jsonData
+	js, err := json.Marshal(data)
+	if err != nil {
+		panic(err)
+	}
+	w.Write(js)
 }
 
 func ResponseWhithMessage(w http.ResponseWriter, message string, code int) {
