@@ -17,10 +17,10 @@ $(document).ready(function(){
             $.ajax({
                 url: 'http://192.168.56.1:3000/Download',
                 type: 'POST',
-                data: phone,
+                data: {phone: phone},
                 success:function(data){
                     if (data.avatar !== null){
-                        var ref = '"data:image/jpeg;base64,' + data.avatar + '"'; 
+                        var ref = "data:image/jpeg;base64," + data.avatar; 
                         $('#avatar').attr("src", ref);
                     }
                     if (data.publications !== 0){
