@@ -17,10 +17,7 @@ func Upload(write http.ResponseWriter, request *http.Request) {
 			JSONResponse.ResponseWhithMessage(write, "Неккоректные данные", http.StatusBadRequest)
 			return
 		}
-		NameCollection = "video"
 
-	} else {
-		NameCollection = "image"
 	}
 
 	phone := request.FormValue("phone")
@@ -79,31 +76,17 @@ func UploadAvatar(write http.ResponseWriter, request *http.Request) {
 	JSONResponse.ResponseWhithData(write, file, http.StatusOK)
 }
 
-func Download(write http.ResponseWriter, request *http.Request) {
-	request.ParseForm()
-	phone := request.FormValue("phone")
-	user := WorkWithBD.FindUserPhone(phone)
-	var NameCollection string
-
-	if !WorkWithBD.IsLoginExist(user.Login) {
-		JSONResponse.ResponseWhithMessage(write, "Неккоректные данные", http.StatusBadRequest)
-		return
-	}
-
-	NameCollection += user.Login
-	result, count, err := WorkWithBD.GetFiles(NameCollection)
+func Download(login string) map[string]interface{} {
+	result, count, err := WorkWithBD.GetFiles(login)
 	if err != nil {
-		JSONResponse.ResponseWhithMessage(write, "Внутренняя ошибка", http.StatusInternalServerError)
-		return
+		return nil
 	}
-	avatar, err := WorkWithBD.GetAvatar(user.Login)
+	avatar, err := WorkWithBD.GetAvatar(login)
 	if err != nil {
 		result["avatar"] = nil
 	} else {
 		result["avatar"] = avatar
 	}
-	// publications := make([]byte, 1)
-	// publications[0] = byte(count)
 	result["publications"] = count
-	JSONResponse.ResponseWhithAllData(write, result, http.StatusOK)
+	return result
 }

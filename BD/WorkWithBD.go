@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"mime/multipart"
+	"strconv"
 
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -64,10 +65,10 @@ func AddUser(fullname string, login string, phone string, password []byte) error
 	return err
 }
 
-func AddInfo(phone string, info string) error {
+func UpdateUser(phone string, phonenew string, fullname string, login string, password []byte, info string) error {
 	stream := SessionMongo.DB("JustFit").C("Users")
 	colQuerier := bson.M{"phone": phone}
-	change := bson.M{"info": info}
+	change := bson.M{"$set": bson.M{"info": info, "name": fullname, "login": login, "phone": phonenew, "hashpassword": password}}
 	err := stream.Update(colQuerier, change)
 	return err
 }
@@ -106,6 +107,12 @@ func FindLikes(imageName string) (result []Likes, err error) {
 	stream := SessionMongo.DB("JustFit").C("Likes")
 	err = stream.Find(bson.M{"image": imageName}).All(&result)
 	return result, err
+}
+
+func DeleteLike(imageName string, login string) error {
+	stream := SessionMongo.DB("JustFit").C("Likes")
+	err := stream.Remove(bson.M{"image": imageName, "login": login})
+	return err
 }
 
 func FindComments(imageName string) (result []Comments, err error) {
@@ -167,7 +174,13 @@ func NewPublication(login string) error {
 }
 
 func UploadFile(f *multipart.FileHeader, NameCollection string) (interface{}, error) {
-	NameFile := NameCollection + f.Filename
+	user := User{}
+	err := SessionMongo.DB("JustFit").C("Users").Find(bson.M{"login": NameCollection}).One(&user)
+	if err != nil {
+		return nil, err
+	}
+	count := strconv.Itoa(user.Publication)
+	NameFile := NameCollection + "file" + count
 	db := SessionMongo.DB("JustFit")
 	file, err := f.Open()
 	if err != nil {
@@ -186,6 +199,10 @@ func UploadFile(f *multipart.FileHeader, NameCollection string) (interface{}, er
 		return nil, err
 	}
 	return GridFile.Id(), nil
+}
+
+func DeleteAvatar(login string) error {
+	return SessionMongo.DB("JustFit").GridFS("Avatar").Remove(login)
 }
 
 func UploadAvatar(f *multipart.FileHeader, login string) (interface{}, error) {
@@ -250,7 +267,7 @@ func GetFiles(Name string) (map[string]interface{}, int, error) {
 	var name string
 	for stream.OpenNext(iter, &image) {
 		i++
-		name = "file" + string(i)
+		name = "file" + strconv.Itoa(i)
 		b := make([]byte, image.Size())
 		_, err := image.Read(b)
 		if err != nil {
