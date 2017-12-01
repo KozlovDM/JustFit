@@ -94,6 +94,7 @@ body {
 .main-profile__info__sec2__stat {
     margin: 0;
     padding: calc(57px / 2);
+    padding-left: 10px;
     list-style: none;
     word-spacing: 5px;
 }
@@ -144,14 +145,17 @@ ul.main-profile__info__sec2__stat > li {
 }
 
 .publication {
-    color: #e3e8e6;
     float: left;
+    height: 200px;
     width: 21%;
-    margin:  2% 2% 5px 2%;
+    margin:  5px 2% 5px 2%;
+    align-items: center;
+    justify-content: center;
 }
 
 .publication img {
     max-width: 100%;
+    height: auto;
 }
 
 @media only screen and (max-width : 940px),
@@ -173,4 +177,139 @@ only screen and (max-device-width : 530px){
 only screen and (max-device-width : 320px){
     .publication {width: 96%;}
     .publication img {width: 96%;}
+}
+
+#overlay {
+    opacity: 0.4;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: black;
+    width: 100%;
+    z-index: 5000;
+}
+
+.window {
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    width: 800px;
+    height: 400px;
+    background-color: #e3e8e6;
+    z-index: 999999999999;
+    border-style: solid;
+    border-color: #303030;
+}
+
+.window-publication {
+    width: 400px;
+}
+
+.window-publication__file {
+    height: 300px;
+    margin-top: 50px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.window-publication__file img {
+    width: 100%;
+}
+
+.window-publication__likes {
+    height: 50px;
+    display: flex;
+}
+
+.window-publication__likes__amount {
+    font-size: 20px;
+    font-family: 'Gloria Hallelujah', cursive;
+    width: 250px;
+    text-align: right;
+}
+
+.window-publication__likes__picture {
+    margin-left: 15px;
+    width: 150px;
+}
+
+.window-comments {
+    width: 400px;
+}
+
+.window-comments__head {
+    display: flex;
+    height: 50px;
+    text-align: center;
+    font-size: 30px;
+    font-family: 'Gloria Hallelujah', cursive;
+}
+
+.window-comments__head__title {
+    width: 382px;
+}
+
+.window-comments__head__close {
+    width: 18px;
+    height: 18px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.window-comments__head__close img {
+    width: 100%;
+    height: auto;
+}
+
+.window-comments__all {
+    height: 300px;
+    width: 380px;
+    margin-left: 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.window-comments__all__pack {
+    padding-top: 10px;
+    width: 355px;
+    display: flex;
+    font-family: 'Gloria Hallelujah', cursive;
+}
+
+.window-comments__all__pack__nickname {
+    word-wrap: break-word;
+    float: left;
+    font-weight: bold;
+}
+
+.window-comments__all__pack__message {
+    margin-left: 10px;
+    word-wrap: break-word;
+    float: left;
+    overflow: hidden;
+    font-weight: 100;
+}
+
+.window-comments__send {
+    height: 50px;
+    display: flex;
+}
+
+input.comment {
+    width: 300px;
+    height: 20px;
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+#send {
+    width: 80px;
+    height: 26px;
+    margin-top: 15px;
 }

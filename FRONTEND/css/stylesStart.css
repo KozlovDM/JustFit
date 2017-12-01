@@ -89,10 +89,10 @@ body, .header, .footer {
 }
 
 .form-enter__close, .form-reg__close {
-    width: 27px;
-    height: 25px;
+    width: 18px;
+    height: 18px;
     background-image: url(images/close.png);
-    margin: 0 0 0 calc(100% - 30px);
+    margin: 0 0 0 calc(100% - 22px);
     border-style: inherit;
 }
 

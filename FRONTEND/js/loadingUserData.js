@@ -22,7 +22,7 @@ $(document).ready(function(){
                 for (var i = 1; i <= data.publications; i++){
                     base64 = data["file" + i]; 
                     ref = '"data:image/jpeg;base64,' + base64 + '"'; 
-                    block = '<div class="publication"><a href=' + ref + ' target="_blank"><img src=' + ref + '></a></div>'; 
+                    block = '<div class="publication"><a href="#"><img src=' + ref + '></a></div>'; 
                     $('.main-collage').append(block);
                 }
             }
@@ -50,7 +50,7 @@ $(document).ready(function(){
                     success: function(data){ 
                         var base64 = data.image; 
                         var ref = '"data:image/jpeg;base64,' + base64 + '"'; 
-                        var block = '<div class="publication"><a href=' + ref + ' target="_blank"><img src=' + ref + '></a></div>'; 
+                        var block = '<div class="publication"><a href="#"><img src=' + ref + '></a></div>'; 
                         $('.main-collage').append(block); 
                     }, 
                     error: function(){ 
