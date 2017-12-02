@@ -1,13 +1,13 @@
-$(document).ready(function(){
+$(document).ready(function(){     
     $('.window').hide();    
     
-    $('.publication').click(function(){
+    $('#userFile').click(function(){
         $("body").append("<div id='overlay'></div>");
         $("#overlay").height($(document).height());
         
         $("html,body").css("overflow","hidden");
         
-        $("#scalePhoto").attr("src",$(this).find('img').attr('src'));
+        $("#scalePhoto").attr("src",$(this).attr('src'));
         $('.window').show();
         
         return false;

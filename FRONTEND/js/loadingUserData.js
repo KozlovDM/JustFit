@@ -1,7 +1,7 @@
 $(document).ready(function(){
     var phone = location.search.substring(1);
     $.ajax({
-        url: 'http://192.168.56.1:3000/GetUserData',
+        url: 'http://172.20.10.4:3000/GetUserData',
         type: 'POST',
         data: {phone: phone},
         success:function(data){
@@ -22,7 +22,7 @@ $(document).ready(function(){
                 for (var i = 1; i <= data.publications; i++){
                     base64 = data["file" + i]; 
                     ref = '"data:image/jpeg;base64,' + base64 + '"'; 
-                    block = '<div class="publication"><a href="#"><img src=' + ref + '></a></div>'; 
+                    block = '<div class="publication"><a href="#"><img id="userFile" src=' + ref + '></a></div>'; 
                     $('.main-collage').append(block);
                 }
             }
@@ -43,14 +43,14 @@ $(document).ready(function(){
 
                 $.ajax({ 
                     type: 'POST', 
-                    url: 'http://192.168.56.1:3000/Upload', 
+                    url: 'http://172.20.10.4:3000/Upload', 
                     contentType: false, 
                     processData: false, 
                     data: data, 
                     success: function(data){ 
                         var base64 = data.image; 
                         var ref = '"data:image/jpeg;base64,' + base64 + '"'; 
-                        var block = '<div class="publication"><a href="#"><img src=' + ref + '></a></div>'; 
+                        var block = '<div class="publication"><a href="#"><img id="userFile" src=' + ref + '></a></div>'; 
                         $('.main-collage').append(block); 
                     }, 
                     error: function(){ 
