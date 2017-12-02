@@ -179,7 +179,7 @@ func UploadFile(f *multipart.FileHeader, NameCollection string) (interface{}, er
 	if err != nil {
 		return nil, err
 	}
-	count := strconv.Itoa(user.Publication)
+	count := strconv.Itoa(user.Publication + 1)
 	NameFile := NameCollection + "file" + count
 	db := SessionMongo.DB("JustFit")
 	file, err := f.Open()
@@ -256,11 +256,12 @@ func GetFile(Name string, id interface{}) ([]byte, error) {
 	return b, nil
 }
 
-func GetFiles(Name string) (map[string]interface{}, int, error) {
-	stream := SessionMongo.DB("JustFit").GridFS(Name)
+func GetFiles(login string) (map[string]interface{}, int, error) {
+	stream := SessionMongo.DB("JustFit").GridFS(login)
 	iter := stream.Find(nil).Iter()
 
 	result := make(map[string]interface{})
+	element := make(map[string]interface{})
 	var image *mgo.GridFile
 
 	i := 0
@@ -273,7 +274,9 @@ func GetFiles(Name string) (map[string]interface{}, int, error) {
 		if err != nil {
 			return nil, i, err
 		}
-		result[name] = b
+		element["file"] = b
+		element["name"] = login + name
+		result[name] = element
 	}
 	return result, i, iter.Err()
 }

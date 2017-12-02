@@ -19,6 +19,7 @@ func main() {
 	http.HandleFunc("/Like", User.Like)
 	http.HandleFunc("/Comment", User.Сomment)
 	http.HandleFunc("/UpdateInfo", User.UpdateInfo)
+	http.HandleFunc("/ImageInfo", User.ImageInfo)
 	err := http.ListenAndServe(":3000", nil)
 	if err != nil {
 		log.Fatalln(err)

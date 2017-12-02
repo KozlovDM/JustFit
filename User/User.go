@@ -72,7 +72,7 @@ func GetUserData(write http.ResponseWriter, request *http.Request, user WorkWith
 }
 
 func UserInfo(write http.ResponseWriter, request *http.Request) {
-	phone := request.PostFormValue("phone")
+	phone := "89119876623"
 	if !WorkWithBD.IsPhoneExist(phone) {
 		JSONResponse.ResponseWhithMessage(write, "Неверный данные", http.StatusBadRequest)
 		return
@@ -111,7 +111,7 @@ func Сomment(write http.ResponseWriter, request *http.Request) {
 		JSONResponse.ResponseWhithMessage(write, "Неверный данные", http.StatusBadRequest)
 		return
 	}
-	if filename != "" && comment != "" {
+	if filename == "" || comment == "" {
 		JSONResponse.ResponseWhithMessage(write, "Неверный данные", http.StatusBadRequest)
 		return
 	}
@@ -177,4 +177,38 @@ func UpdateInfo(write http.ResponseWriter, request *http.Request) {
 		}
 	}
 	JSONResponse.ResponseWhithMessage(write, "Данные обновлены", http.StatusOK)
+}
+
+func ImageInfo(write http.ResponseWriter, request *http.Request) {
+	filename := request.PostFormValue("filename")
+	comments, err := WorkWithBD.FindComments(filename)
+	if err != nil {
+		JSONResponse.ResponseWhithMessage(write, "Неккоректные данные", http.StatusBadRequest)
+		return
+	}
+
+	likes, err := WorkWithBD.FindLikes(filename)
+	if err != nil {
+		JSONResponse.ResponseWhithMessage(write, "Неккоректные данные", http.StatusBadRequest)
+		return
+	}
+
+	comment := make(map[string]string)
+	result := make(map[string]interface{})
+	count := 0
+	var name string
+	for _, v := range comments {
+		count++
+		name = "comment" + strconv.Itoa(count)
+		comment[name] = v.Comment
+		comment["user"] = v.Login
+	}
+	result["comment"] = comment
+	result["count"] = count
+	count = 0
+	for _ = range likes {
+		count++
+	}
+	result["like"] = count
+	JSONResponse.ResponseWhithAllData(write, result, http.StatusOK)
 }
