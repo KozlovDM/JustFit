@@ -24,7 +24,7 @@ $(document).ready(function(){
                     ref = '"data:image/jpeg;base64,' + base64 + '"'; 
                     alt = '"' + data["file" + i].nameimage + '" ';
                     block = '<div class="publication"><a href="#"><img id="userFile" alt=' + alt + 'src=' + ref + '></a></div>'; 
-                    $('.main-collage').append(block);
+                    $('#collage').append(block);
                 }
             }
         },
@@ -53,7 +53,7 @@ $(document).ready(function(){
                         var ref = '"data:image/jpeg;base64,' + base64 + '"'; 
                         var alt = '"' + data.nameimage + '" ';
                         var block = '<div class="publication"><a href="#"><img id="userFile" alt=' + alt + 'src=' + ref + '></a></div>'; 
-                        $('.main-collage').append(block);
+                        $('#collage').append(block);
                         $('.publication_amount').text('Публикации: ' + data.publications);
                     }, 
                     error: function(){ 

@@ -138,7 +138,7 @@ ul.main-profile__info__sec2__stat > li {
     padding-top: 15px;
 }
 
-.main-collage {
+#collage {
     width: 80%;
     margin: 12px auto;
     overflow: hidden;
