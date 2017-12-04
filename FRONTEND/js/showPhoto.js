@@ -38,7 +38,7 @@ $(document).ready(function(){
         
         $('#send').on('click', function(event){ 
             event.preventDefault(); 
-            var comment = document.getElementById('uploadComment').val(); 
+            var comment = $('input[class="comment"]').val(); 
             if (comment !== null){ 
                 var data = new FormData(); 
                 data.append("nameimage", nameimage); 
@@ -65,10 +65,24 @@ $(document).ready(function(){
         $('.heart').click(function(){
             if (like){
                 $(this).find('img').attr("src", "css/images/heart.png");
+                like = false;
             }
             else{
                 $(this).find('img').attr("src", "css/images/redheart.png");
+                like = true;
             }
+            
+            $.ajax({ 
+                type: 'POST', 
+                url: 'http://172.20.10.4:3000/Like',  
+                data: {nameimage: nameimage, phone: phone}, 
+                success: function(data){ 
+                    $('.window-publication__likes__amount').text('Нравится: ' + data.like);
+                }, 
+                error:function(status, errorMsg){
+                    alert("Статус: " + status + " Ошибка: " + errorMsg);
+                } 
+            });
         });
         
         $('.close').click(function(){
