@@ -1,7 +1,7 @@
 $(document).ready(function(){
     var phone = location.search.substring(1);
     $.ajax({
-        url: 'http://172.20.10.4:3000/GetUserData',
+        url: 'http://127.0.0.1:3000/GetUserData',
         type: 'POST',
         data: {phone: phone},
         success:function(data){
@@ -44,7 +44,7 @@ $(document).ready(function(){
 
                 $.ajax({ 
                     type: 'POST', 
-                    url: 'http://172.20.10.4:3000/Upload', 
+                    url: 'http://127.0.0.1:3000/Upload', 
                     contentType: false, 
                     processData: false, 
                     data: data, 

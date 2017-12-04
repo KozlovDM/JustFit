@@ -1,4 +1,5 @@
 $(document).ready(function(){ 
+    var phone = location.search.substring(1);
     $('.window').hide();    
     
     $("#collage").on("click","a",function(){
@@ -13,7 +14,7 @@ $(document).ready(function(){
         var nameimage = $(this).find('img').attr('alt');
         $('#send').on('click', function(event){ 
             event.preventDefault(); 
-            var comment = document.getElementById('uploadComment').val(); 
+            var comment = $('input[class="comment"]').val(); 
             if (comment !== null){ 
                 var data = new FormData(); 
                 data.append("nameimage", nameimage); 
@@ -22,7 +23,7 @@ $(document).ready(function(){
 
                 $.ajax({ 
                     type: 'POST', 
-                    url: 'http://172.20.10.4:3000/Comment', 
+                    url: 'http://127.0.0.1:3000/Comment', 
                     contentType: false, 
                     processData: false, 
                     data: data, 
@@ -41,8 +42,9 @@ $(document).ready(function(){
     });
     
     $('.close').click(function(){
-        $('.heart').find('img').attr("src","css/images/heart.png");
         $('.window').hide();
+        $('.window-comments__all').html('');
+        $('.heart').find('img').attr("src","css/images/heart.png");
         $("#overlay").remove();
         $("html,body").css("overflow","auto");
         
