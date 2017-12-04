@@ -159,46 +159,46 @@ func IsLoginExist(login string) bool {
 	return true
 }
 
-func NewPublication(login string) error {
+func NewPublication(login string) (int, error) {
 	stream := SessionMongo.DB("JustFit").C("Users")
 	user := User{}
 	err := stream.Find(bson.M{"login": login}).One(&user)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	count := user.Publication + 1
 	colQuerier := bson.M{"login": login}
 	change := bson.M{"$set": bson.M{"publication": count}}
 	err = stream.Update(colQuerier, change)
-	return err
+	return count, err
 }
 
-func UploadFile(f *multipart.FileHeader, NameCollection string) (interface{}, error) {
+func UploadFile(f *multipart.FileHeader, NameCollection string) (string, error) {
 	user := User{}
 	err := SessionMongo.DB("JustFit").C("Users").Find(bson.M{"login": NameCollection}).One(&user)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 	count := strconv.Itoa(user.Publication + 1)
 	NameFile := NameCollection + "file" + count
 	db := SessionMongo.DB("JustFit")
 	file, err := f.Open()
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 	GridFile, err := db.GridFS(NameCollection).Create(NameFile)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 	_, err = io.Copy(GridFile, file)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 	err = GridFile.Close()
 	if err != nil {
-		return nil, err
+		return "", err
 	}
-	return GridFile.Id(), nil
+	return NameFile, nil
 }
 
 func DeleteAvatar(login string) error {
@@ -243,17 +243,21 @@ func GetAvatar(login string) ([]byte, error) {
 	return nil, err
 }
 
-func GetFile(Name string, id interface{}) ([]byte, error) {
-	file, err := SessionMongo.DB("JustFit").GridFS(Name).OpenId(id)
-	if err != nil {
-		return nil, err
+func GetFile(name string, nameFile string) ([]byte, error) {
+	stream := SessionMongo.DB("JustFit").GridFS(name)
+	iter := stream.Find(bson.M{"filename": nameFile}).Iter()
+
+	var image *mgo.GridFile
+	if stream.OpenNext(iter, &image) {
+		b := make([]byte, image.Size())
+		_, err := image.Read(b)
+		if err != nil {
+			return nil, err
+		}
+		return b, nil
 	}
-	b := make([]byte, file.Size())
-	_, err = file.Read(b)
-	if err != nil {
-		return nil, err
-	}
-	return b, nil
+	err := errors.New("Not Found")
+	return nil, err
 }
 
 func GetFiles(login string) (map[string]interface{}, int, error) {
@@ -261,12 +265,12 @@ func GetFiles(login string) (map[string]interface{}, int, error) {
 	iter := stream.Find(nil).Iter()
 
 	result := make(map[string]interface{})
-	element := make(map[string]interface{})
 	var image *mgo.GridFile
-
 	i := 0
 	var name string
+
 	for stream.OpenNext(iter, &image) {
+		element := make(map[string]interface{})
 		i++
 		name = "file" + strconv.Itoa(i)
 		b := make([]byte, image.Size())
@@ -275,7 +279,7 @@ func GetFiles(login string) (map[string]interface{}, int, error) {
 			return nil, i, err
 		}
 		element["file"] = b
-		element["name"] = login + name
+		element["nameimage"] = login + name
 		result[name] = element
 	}
 	return result, i, iter.Err()

@@ -122,7 +122,7 @@ func Сomment(write http.ResponseWriter, request *http.Request) {
 		JSONResponse.ResponseWhithMessage(write, "Внутренняя ошибка", http.StatusInternalServerError)
 		return
 	}
-	JSONResponse.ResponseWhithMessage(write, "Новый комментарий", http.StatusOK)
+	JSONResponse.ResponseLogin(write, user.Login, http.StatusOK)
 }
 
 func FindUser(write http.ResponseWriter, request *http.Request) {
@@ -197,11 +197,13 @@ func ImageInfo(write http.ResponseWriter, request *http.Request) {
 	result := make(map[string]interface{})
 	count := 0
 	var name string
+	var user string
 	for _, v := range comments {
 		count++
 		name = "comment" + strconv.Itoa(count)
+		user = "user" + strconv.Itoa(count)
 		comment[name] = v.Comment
-		comment["user"] = v.Login
+		comment[user] = v.Login
 	}
 	result["comment"] = comment
 	result["count"] = count

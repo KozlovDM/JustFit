@@ -20,6 +20,8 @@ func Upload(write http.ResponseWriter, request *http.Request) {
 
 	}
 
+	result := make(map[string]interface{})
+
 	phone := request.FormValue("phone")
 	user := WorkWithBD.FindUserPhone(phone)
 	if !WorkWithBD.IsLoginExist(user.Login) {
@@ -28,23 +30,24 @@ func Upload(write http.ResponseWriter, request *http.Request) {
 		return
 	}
 	NameCollection += user.Login
-	id, err := WorkWithBD.UploadFile(handler, NameCollection)
+	nameFile, err := WorkWithBD.UploadFile(handler, NameCollection)
 	if err != nil {
 		JSONResponse.ResponseWhithMessage(write, "Внутренняя ошибка", http.StatusInternalServerError)
 		return
 	}
-	err = WorkWithBD.NewPublication(user.Login)
+	result["nameimage"] = nameFile
+	result["publications"], err = WorkWithBD.NewPublication(user.Login)
 	if err != nil {
 		JSONResponse.ResponseWhithMessage(write, "Внутренняя ошибка", http.StatusInternalServerError)
 		return
 	}
-	file, err := WorkWithBD.GetFile(NameCollection, id)
+	result["file"], err = WorkWithBD.GetFile(NameCollection, nameFile)
 	if err != nil {
 		fmt.Println(err)
 		JSONResponse.ResponseWhithMessage(write, "Внутренняя ошибка", http.StatusInternalServerError)
 		return
 	}
-	JSONResponse.ResponseWhithData(write, file, http.StatusOK)
+	JSONResponse.ResponseWhithAllData(write, result, http.StatusOK)
 }
 
 func UploadAvatar(write http.ResponseWriter, request *http.Request) {
