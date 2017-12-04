@@ -18,11 +18,12 @@ $(document).ready(function(){
                 $('#avatar').attr("src", ref);
             }
             if (data.publications !== 0){
-                var base64, ref, block;
+                var base64, ref, alt, block;
                 for (var i = 1; i <= data.publications; i++){
-                    base64 = data["file" + i]; 
+                    base64 = data["file" + i].file; 
                     ref = '"data:image/jpeg;base64,' + base64 + '"'; 
-                    block = '<div class="publication"><a href="#"><img id="userFile" src=' + ref + '></a></div>'; 
+                    alt = '"' + data["file" + i].nameimage + '" ';
+                    block = '<div class="publication"><a href="#"><img id="userFile" alt=' + alt + 'src=' + ref + '></a></div>'; 
                     $('.main-collage').append(block);
                 }
             }
@@ -48,10 +49,12 @@ $(document).ready(function(){
                     processData: false, 
                     data: data, 
                     success: function(data){ 
-                        var base64 = data.image; 
+                        var base64 = data.file; 
                         var ref = '"data:image/jpeg;base64,' + base64 + '"'; 
-                        var block = '<div class="publication"><a href="#"><img id="userFile" src=' + ref + '></a></div>'; 
-                        $('.main-collage').append(block); 
+                        var alt = '"' + data.nameimage + '" ';
+                        var block = '<div class="publication"><a href="#"><img id="userFile" alt=' + alt + 'src=' + ref + '></a></div>'; 
+                        $('.main-collage').append(block);
+                        $('.publication_amount').text('Публикации: ' + data.publications);
                     }, 
                     error: function(){ 
                         alert("Файл не может быть загружен!"); 
