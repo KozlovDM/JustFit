@@ -88,6 +88,7 @@ $(document).ready(function(){
         $('.close').click(function(){
             $('.heart').find('img').attr("src","css/images/heart.png");
             $('.window').hide();
+            $('.window-comments__all').html('');
             $("#overlay").remove();
             $("html,body").css("overflow","auto");
         });
