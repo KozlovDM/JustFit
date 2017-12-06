@@ -15,13 +15,13 @@ $(document).ready(function(){
         
         $.ajax({ 
             type: 'POST', 
-            url: 'http://172.20.10.4:3000/ImageInfo',  
+            url: 'http://10.254.4.178:3000/ImageInfo',  
             data: {nameimage: nameimage, phone: phone}, 
             success: function(data){
                 like = data.islike;
                 if (data.count !== 0){
                     for (var i = 1; i <= data.count; i++){
-                        var block = '<div class="window-comments__all__pack"><div class="window-comments__all__pack__nickname">' + data.user["user" + i] + '</div><div class="window-comments__all__pack__message">' + data.comment["comment" + i] + '</div></div>'; 
+                        var block = '<div class="window-comments__all__pack"><div class="window-comments__all__pack__nickname">' + data.comment["user" + i] + '</div><div class="window-comments__all__pack__message">' + data.comment["comment" + i] + '</div></div>'; 
                         $('.window-comments__all').append(block);
                     }
                 }
@@ -47,7 +47,7 @@ $(document).ready(function(){
 
                 $.ajax({ 
                     type: 'POST', 
-                    url: 'http://172.20.10.4:3000/Comment', 
+                    url: 'http://10.254.4.178:3000/Comment', 
                     contentType: false, 
                     processData: false, 
                     data: data, 
@@ -74,7 +74,7 @@ $(document).ready(function(){
             
             $.ajax({ 
                 type: 'POST', 
-                url: 'http://172.20.10.4:3000/Like',  
+                url: 'http://10.254.4.178:3000/Like',  
                 data: {nameimage: nameimage, phone: phone}, 
                 success: function(data){ 
                     $('.window-publication__likes__amount').text('Нравится: ' + data.like);
