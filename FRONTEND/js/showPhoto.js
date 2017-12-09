@@ -1,4 +1,6 @@
 $(document).ready(function(){ 
+    var windowBlock = '<div class="window-publication"><div class="window-publication__file"><img id="scalePhoto" src="css/images/avatar.jpg"/></div><div class="window-publication__likes"><div class="window-publication__likes__amount">Нравится: 0</div><div class="window-publication__likes__picture"><a class="heart" href="#"><img src="css/images/heart.png"/></a></div></div></div><div class="window-comments"><div class="window-comments__head"><div class="window-comments__head__title">Комментарии</div><div class="window-comments__head__close"><a class="close" href="#"><img src="css/images/close2.png"/></a></div></div><div class="window-comments__all"></div><div class="window-comments__send"><input class="comment" id="uploadComment" type="text" placeholder="Оставить комментарий..." maxLength=100/><button id="send">Отправить</button></div></div>';
+    
     var phone = location.search.substring(1);
     var like;
     $('.window').hide();    
@@ -86,9 +88,8 @@ $(document).ready(function(){
         });
         
         $('.close').click(function(){
-            $('.heart').find('img').attr("src","css/images/heart.png");
             $('.window').hide();
-            $('.window-comments__all').html('');
+            $('.window').html(windowBlock);
             $("#overlay").remove();
             $("html,body").css("overflow","auto");
         });
