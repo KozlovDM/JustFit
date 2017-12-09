@@ -5,6 +5,7 @@ import (
 	"JustFit/File"
 	"JustFit/JSONResponse"
 	"net/http"
+	"regexp"
 	"strconv"
 
 	"golang.org/x/crypto/bcrypt"
@@ -72,27 +73,45 @@ func GetUserData(write http.ResponseWriter, request *http.Request, user WorkWith
 }
 
 func UserInfo(write http.ResponseWriter, request *http.Request) {
-	phone := "89119876623"
-	if !WorkWithBD.IsPhoneExist(phone) {
-		JSONResponse.ResponseWhithMessage(write, "Неверный данные", http.StatusBadRequest)
+	phone := request.PostFormValue("phone")
+	login := request.PostFormValue("login")
+
+	if WorkWithBD.IsPhoneExist(phone) {
+		user, _ := WorkWithBD.FindUserPhone(phone)
+		GetUserData(write, request, user)
+	} else if WorkWithBD.IsLoginExist(login) {
+		user := WorkWithBD.FindUserLogin(login)
+		GetUserData(write, request, user)
+	} else {
+		JSONResponse.ResponseWhithMessage(write, "Неверный номер телефона и/или пароль", http.StatusBadRequest)
 		return
 	}
-	user := WorkWithBD.FindUserPhone(phone)
-	GetUserData(write, request, user)
 }
 
 func Like(write http.ResponseWriter, request *http.Request) {
 	phone := request.PostFormValue("phone")
-	filename := request.PostFormValue("filename")
+	filename := request.PostFormValue("nameimage")
 	if !WorkWithBD.IsPhoneExist(phone) {
 		JSONResponse.ResponseWhithMessage(write, "Неверный данные", http.StatusBadRequest)
 		return
 	}
 
-	user := WorkWithBD.FindUserPhone(phone)
-	err := WorkWithBD.DeleteLike(filename, user.Login)
+	user, _ := WorkWithBD.FindUserPhone(phone)
+	result := make(map[string]interface{})
+	likes, err := WorkWithBD.FindLikes(filename)
+	if err != nil {
+		JSONResponse.ResponseWhithMessage(write, "Неккоректные данные", http.StatusBadRequest)
+		return
+	}
+	count := 0
+	for _ = range likes {
+		count++
+	}
+	err = WorkWithBD.DeleteLike(filename, user.Login)
 	if err == nil {
-		JSONResponse.ResponseWhithMessage(write, "Вам больше не нравится", http.StatusOK)
+		result["like"] = count - 1
+		result["islike"] = false
+		JSONResponse.ResponseWhithAllData(write, result, http.StatusOK)
 		return
 	}
 	err = WorkWithBD.NewLike(filename, user.Login)
@@ -100,12 +119,15 @@ func Like(write http.ResponseWriter, request *http.Request) {
 		JSONResponse.ResponseWhithMessage(write, "Внутренняя ошибка", http.StatusInternalServerError)
 		return
 	}
-	JSONResponse.ResponseWhithMessage(write, "Вам нравится", http.StatusOK)
+
+	result["islike"] = true
+	result["like"] = count + 1
+	JSONResponse.ResponseWhithAllData(write, result, http.StatusOK)
 }
 
 func Сomment(write http.ResponseWriter, request *http.Request) {
 	phone := request.PostFormValue("phone")
-	filename := request.PostFormValue("filename")
+	filename := request.PostFormValue("nameimage")
 	comment := request.PostFormValue("comment")
 	if !WorkWithBD.IsPhoneExist(phone) {
 		JSONResponse.ResponseWhithMessage(write, "Неверный данные", http.StatusBadRequest)
@@ -116,8 +138,18 @@ func Сomment(write http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	user := WorkWithBD.FindUserPhone(phone)
-	err := WorkWithBD.NewComments(filename, user.Login, comment)
+	user, err := WorkWithBD.FindUserPhone(phone)
+	if err != nil {
+		JSONResponse.ResponseWhithMessage(write, "Неверный данные", http.StatusBadRequest)
+		return
+	}
+
+	if err := WorkWithBD.AntiSpam(filename, user.Login, comment); err == nil {
+		JSONResponse.ResponseWhithMessage(write, "AntiSpam", http.StatusOK)
+		return
+	}
+
+	err = WorkWithBD.NewComments(filename, user.Login, comment)
 	if err != nil {
 		JSONResponse.ResponseWhithMessage(write, "Внутренняя ошибка", http.StatusInternalServerError)
 		return
@@ -180,7 +212,8 @@ func UpdateInfo(write http.ResponseWriter, request *http.Request) {
 }
 
 func ImageInfo(write http.ResponseWriter, request *http.Request) {
-	filename := request.PostFormValue("filename")
+	filename := request.PostFormValue("nameimage")
+	phone := request.PostFormValue("phone")
 	comments, err := WorkWithBD.FindComments(filename)
 	if err != nil {
 		JSONResponse.ResponseWhithMessage(write, "Неккоректные данные", http.StatusBadRequest)
@@ -192,25 +225,46 @@ func ImageInfo(write http.ResponseWriter, request *http.Request) {
 		JSONResponse.ResponseWhithMessage(write, "Неккоректные данные", http.StatusBadRequest)
 		return
 	}
-
+	user, _ := WorkWithBD.FindUserPhone(phone)
 	comment := make(map[string]string)
 	result := make(map[string]interface{})
 	count := 0
 	var name string
-	var user string
+	var userName string
 	for _, v := range comments {
 		count++
 		name = "comment" + strconv.Itoa(count)
-		user = "user" + strconv.Itoa(count)
+		userName = "user" + strconv.Itoa(count)
 		comment[name] = v.Comment
-		comment[user] = v.Login
+		comment[userName] = v.Login
 	}
 	result["comment"] = comment
 	result["count"] = count
 	count = 0
-	for _ = range likes {
+	result["islike"] = false
+	for _, v := range likes {
+		if v.Login == user.Login {
+			result["islike"] = true
+		}
 		count++
 	}
 	result["like"] = count
+	JSONResponse.ResponseWhithAllData(write, result, http.StatusOK)
+}
+
+func Search(write http.ResponseWriter, request *http.Request) {
+	login := request.PostFormValue("login")
+
+	reg := regexp.MustCompile(`^(?i)[a-z1-9а-я]*$`)
+	if !reg.MatchString(login) {
+		JSONResponse.ResponseWhithMessage(write, "Неккоректные данные", http.StatusBadRequest)
+		return
+	}
+	result, err := WorkWithBD.FindUser(login)
+	if err != nil {
+		JSONResponse.ResponseWhithMessage(write, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	JSONResponse.ResponseWhithAllData(write, result, http.StatusOK)
 }

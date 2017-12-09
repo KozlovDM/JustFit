@@ -54,7 +54,7 @@ func SingIn(write http.ResponseWriter, request *http.Request) {
 	var result WorkWithBD.User
 
 	if WorkWithBD.IsPhoneExist(phone) {
-		result = WorkWithBD.FindUserPhone(phone)
+		result, _ = WorkWithBD.FindUserPhone(phone)
 	} else if WorkWithBD.IsLoginExist(login) {
 		result = WorkWithBD.FindUserLogin(login)
 	} else {

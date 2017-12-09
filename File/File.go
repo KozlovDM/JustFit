@@ -23,7 +23,7 @@ func Upload(write http.ResponseWriter, request *http.Request) {
 	result := make(map[string]interface{})
 
 	phone := request.FormValue("phone")
-	user := WorkWithBD.FindUserPhone(phone)
+	user, _ := WorkWithBD.FindUserPhone(phone)
 	if !WorkWithBD.IsLoginExist(user.Login) {
 		fmt.Println(err)
 		JSONResponse.ResponseWhithMessage(write, "Неккоректные данные", http.StatusBadRequest)
@@ -59,7 +59,7 @@ func UploadAvatar(write http.ResponseWriter, request *http.Request) {
 	}
 
 	phone := request.FormValue("phone")
-	user := WorkWithBD.FindUserPhone(phone)
+	user, _ := WorkWithBD.FindUserPhone(phone)
 	if !WorkWithBD.IsLoginExist(user.Login) {
 		JSONResponse.ResponseWhithMessage(write, "Неккоректные данные", http.StatusBadRequest)
 		return

@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"mime/multipart"
+	"regexp"
 	"strconv"
 
 	"gopkg.in/mgo.v2"
@@ -115,6 +116,13 @@ func DeleteLike(imageName string, login string) error {
 	return err
 }
 
+func AntiSpam(imageName string, login string, comment string) error {
+	var result Comments
+	stream := SessionMongo.DB("JustFit").C("Comments")
+	err := stream.Find(bson.M{"image": imageName, "login": login, "comment": comment}).One(&result)
+	return err
+}
+
 func FindComments(imageName string) (result []Comments, err error) {
 	stream := SessionMongo.DB("JustFit").C("Comments")
 	err = stream.Find(bson.M{"image": imageName}).All(&result)
@@ -122,11 +130,11 @@ func FindComments(imageName string) (result []Comments, err error) {
 }
 
 //FindUserPhone
-func FindUserPhone(phone string) User {
+func FindUserPhone(phone string) (User, error) {
 	stream := SessionMongo.DB("JustFit").C("Users")
 	result := User{}
-	_ = stream.Find(bson.M{"phone": phone}).One(&result)
-	return result
+	err := stream.Find(bson.M{"phone": phone}).One(&result)
+	return result, err
 }
 
 //FindUserLogin
@@ -157,6 +165,26 @@ func IsLoginExist(login string) bool {
 		return false
 	}
 	return true
+}
+
+func FindUser(login string) (map[string]interface{}, error) {
+	result := make(map[string]interface{})
+	stream := SessionMongo.DB("JustFit").C("Users")
+	var user []User
+	reg := regexp.MustCompile(`^(?i)` + login + `[a-z1-9а-я]*$`)
+	err := stream.Find(bson.M{}).All(&user)
+	if err != nil {
+		return result, err
+	}
+	count := 0
+	for _, v := range user {
+		if reg.MatchString(v.Login) {
+			count++
+			name := "user" + strconv.Itoa(count)
+			result[name] = v.Login
+		}
+	}
+	return result, err
 }
 
 func NewPublication(login string) (int, error) {
