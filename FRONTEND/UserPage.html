@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="css/stylesUser.css">
         <script src="js/loadingUserData.js"></script>
         <script src="js/showPhoto.js"></script>
+        <script src="js/findUser.js"></script>
     </head>
     <body>
         <header class="header">
@@ -21,10 +22,7 @@
                     <a href="StartPage.html" class="header-menu__link">Выйти</a>
                 </li>
                 <li class="header-menu__search">
-                    <form>
-                        <input type="text" placeholder="Найти...">
-                        <button type="submit"></button>
-                    </form>
+                    <input class="find" type="text" placeholder="Найти...">
                 </li>
                 </ul>
         </header>
@@ -78,6 +76,11 @@
                         <input class="comment" id="uploadComment" type="text" placeholder="Оставить комментарий..." maxLength=100/>
                         <button id="send">Отправить</button>
                     </div>
+                </div>
+            </div>
+            <div class="searchWindow">
+                <div class="foundUser">
+                    <span class="foundUser-notfound">Ничего не найдено</span>
                 </div>
             </div>
         </main>

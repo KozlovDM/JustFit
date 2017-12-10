@@ -8,7 +8,6 @@ $(document).ready(function(){
     $("#collage").on("click","a",function(){
         $("body").append("<div id='overlay'></div>");
         $("#overlay").height($(document).height());
-        
         $("html,body").css("overflow","hidden");
         
         $("#scalePhoto").attr("src",$(this).find('img').attr('src'));
@@ -17,7 +16,7 @@ $(document).ready(function(){
         
         $.ajax({ 
             type: 'POST', 
-            url: 'http://10.254.4.178:3000/ImageInfo',  
+            url: 'http://127.0.0.1:3000/ImageInfo',  
             data: {nameimage: nameimage, phone: phone}, 
             success: function(data){
                 like = data.islike;
@@ -49,7 +48,7 @@ $(document).ready(function(){
 
                 $.ajax({ 
                     type: 'POST', 
-                    url: 'http://10.254.4.178:3000/Comment', 
+                    url: 'http://127.0.0.1:3000/Comment', 
                     contentType: false, 
                     processData: false, 
                     data: data, 
@@ -62,6 +61,7 @@ $(document).ready(function(){
                     } 
                 }); 
             } 
+            $('input[class="comment"]').val('');
         });
         
         $('.heart').click(function(){
@@ -76,7 +76,7 @@ $(document).ready(function(){
             
             $.ajax({ 
                 type: 'POST', 
-                url: 'http://10.254.4.178:3000/Like',  
+                url: 'http://127.0.0.1:3000/Like',  
                 data: {nameimage: nameimage, phone: phone}, 
                 success: function(data){ 
                     $('.window-publication__likes__amount').text('Нравится: ' + data.like);
@@ -92,6 +92,7 @@ $(document).ready(function(){
             $('.window').html(windowBlock);
             $("#overlay").remove();
             $("html,body").css("overflow","auto");
+            return false;
         });
         
         return false;
