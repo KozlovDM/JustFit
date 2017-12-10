@@ -179,11 +179,18 @@ func FindUser(login string) (map[string]interface{}, error) {
 	count := 0
 	for _, v := range user {
 		if reg.MatchString(v.Login) {
+			element := make(map[string]interface{})
 			count++
 			name := "user" + strconv.Itoa(count)
-			result[name] = v.Login
+			element["login"] = v.Login
+			element["avatar"], err = GetAvatar(v.Login)
+			if err != nil {
+				return result, err
+			}
+			result[name] = element
 		}
 	}
+	result["count"] = count
 	return result, err
 }
 
@@ -267,8 +274,7 @@ func GetAvatar(login string) ([]byte, error) {
 		}
 		return b, nil
 	}
-	err := errors.New("Not Found")
-	return nil, err
+	return nil, nil
 }
 
 func GetFile(name string, nameFile string) ([]byte, error) {
