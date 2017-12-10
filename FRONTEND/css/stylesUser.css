@@ -30,7 +30,7 @@ body {
     right: 0;
 }
 
-.header-menu__search form {
+.header-menu__search {
   position: relative;
   width: 300px; 
 }
@@ -44,21 +44,6 @@ body {
   outline: none;
   background: #F9F0DA;
   color: #9E9C9C;
-}
-
-.header-menu__search button {
-  position: absolute; 
-  width: 30px;
-  height: 30px;
-  top: 15px;
-  right: 0;
-  border: none;
-  background: #7BA7AB;
-  border-radius: 5px;
-  cursor: pointer;
-  background-image: url(images/search.png); 
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
 .header-menu__link {
@@ -94,7 +79,7 @@ body {
     width: 152px;
     padding: 24px;
     padding-left: 24px;
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: center;
 }
@@ -353,4 +338,55 @@ input.comment {
     width: 80px;
     height: 26px;
     margin-top: 15px;
+}
+
+.searchWindow {
+    position: fixed;
+    top: 47px;
+    left: 643px;
+    width: 300px;
+    height: 400px;
+    background-color: #e3e8e6;
+    z-index: 999999999999;
+    border-style: solid;
+    border-color: #303030;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.foundUser {
+    display: flex;
+    width: 300px;
+    height: 50px;
+}
+
+.foundUser-avatar {
+    height: 40px;
+    width: 40px;
+    padding: 5px;
+    padding-left: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.foundUser-avatar img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+}
+
+.foundUser-nickname {
+    width: 250px;
+    text-decoration: none;
+    color: black;
+    font-family: 'Raleway', cursive;
+    margin: auto;
+}
+
+.foundUser-notfound {
+    text-align: center;
+    font-family: 'Raleway', cursive;
+    margin: auto;
 }
