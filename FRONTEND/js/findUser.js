@@ -16,6 +16,7 @@ $(document).ready(function(){
     });
     
     $('input[class="find"]').on('input keyup',function(event){
+        $('.searchWindow').show();
         event.preventDefault(); 
         var inputData = $('input[class="find"]').val(); 
         if (inputData !== null){ 
@@ -30,15 +31,15 @@ $(document).ready(function(){
                 data: data, 
                 success: function(data){ 
                     if (data.count !== 0){
-                        $('.foundUser').html('');
+                        $('.searchWindow').html('');
                         var ref = '"css/images/avatar.jpg"';
                         for (var i = 1; i <= data.count; i++){
-                            if (data["avatar" + i] !== null){
-                                var base64 = data["avatar" + i]; 
+                            if (data["user" + i].avatar !== null){
+                                var base64 = data["user" + i].avatar; 
                                 ref = '"data:image/jpeg;base64,' + base64 + '"';
                             }
-                            var block = '<div class="foundUser"><div class="foundUser-avatar"><img src=' + ref + '/></div><a href="#" class="foundUser-nickname">' + data["name" + i] + '</a></div>'; 
-                            $('.foundUser').append(block);
+                            var block = '<div class="foundUser"><div class="foundUser-avatar"><img src=' + ref + '/></div><a href="#" class="foundUser-nickname">' + data["user" + i].login + '</a></div>'; 
+                            $('.searchWindow').append(block);
                         }
                     }
                     else{
@@ -50,5 +51,8 @@ $(document).ready(function(){
                 } 
             }); 
         } 
+        else{
+            $('.searchWindow').html(searhBlock);
+        }
     });
 });
