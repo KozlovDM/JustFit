@@ -6,6 +6,7 @@ $(document).ready(function(){
         data: {phone: phone},
         success:function(data){
             $('.sec1__nickname').text(data.login);
+            $('#avatar').attr("alt", data.login);
             $('.publication_amount').text('Публикации: ' + data.publications);
             $('.subscriber_amount').text('Подписчики: ' + data.subscribers);
             $('.subscription_amount').text('Подписки: ' + data.subscriptions);

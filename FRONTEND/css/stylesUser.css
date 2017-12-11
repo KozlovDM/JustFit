@@ -377,9 +377,9 @@ input.comment {
 }
 
 .searchWindow {
-    position: fixed;
+    position: absolute;
     top: 47px;
-    left: 643px;
+    left: 634px;
     width: 300px;
     height: 400px;
     background-color: #e3e8e6;

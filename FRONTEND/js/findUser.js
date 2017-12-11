@@ -4,7 +4,6 @@ $(document).ready(function(){
     $('.searchWindow').hide();
     
     $('input[class="find"]').on('click',function(){
-        $("html,body").css("overflow","hidden");
         $('.searchWindow').show();
     });
     
@@ -14,7 +13,6 @@ $(document).ready(function(){
             div.hide();
             $('input[class="find"]').val('');
             $('.searchWindow').html(searhBlock);
-            $("html,body").css("overflow","auto");
         }
     });
     
@@ -93,9 +91,14 @@ $(document).ready(function(){
                     $('#collage').append(block);
                 }
             }
-            $('.sec1__edit').hide();
-            $('.main-profile__info__sec4').hide();
-            $("html,body").css("overflow","auto");
+            if ($('#avatar').attr("alt") !== login){
+                $('.sec1__edit').hide();
+                $('.main-profile__info__sec4').hide();
+            }
+            else{
+                $('.sec1__edit').show();
+                $('.main-profile__info__sec4').show();
+            }
             $('input[class="find"]').val('');
         }, 
             error:function(status, errorMsg){
