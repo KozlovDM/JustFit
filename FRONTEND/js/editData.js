@@ -27,6 +27,7 @@ $(document).ready(function(){
         if (document.getElementById('editAvatar').files.length !== 0) {
             avatar = document.getElementById('editAvatar').files[0];
         }
+        alert(avatar);
         var data = new FormData(); 
         data.append("phone", phone);
         data.append("login", login);
@@ -39,11 +40,11 @@ $(document).ready(function(){
             contentType: false, 
             processData: false, 
             data: data, 
-            success: function(){ 
+            success: function(data){ 
                 $('.sec1__nickname').text(login);
                 $('.about__fullname').text(fullname);   
                 if (avatar !== null){
-                    var ref = "data:image/jpeg;base64," + avatar; 
+                    var ref = "data:image/jpeg;base64," + data.avatar;
                     $('#avatar').attr("src", ref);
                 } 
                 $('.main-profile__edit').hide();

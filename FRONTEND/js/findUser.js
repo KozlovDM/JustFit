@@ -33,11 +33,14 @@ $(document).ready(function(){
                 success: function(data){ 
                     if (data.count !== 0){
                         $('.searchWindow').html('');
-                        var ref = '"css/images/avatar.jpg"';
+                        var ref;
                         for (var i = 1; i <= data.count; i++){
                             if (data["user" + i].avatar !== null){
                                 var base64 = data["user" + i].avatar; 
                                 ref = '"data:image/jpeg;base64,' + base64 + '"';
+                            }
+                            else{
+                                ref = '"css/images/avatar.jpg"';
                             }
                             var login = data["user" + i].login;
                             var block = '<div class="foundUser"><div class="foundUser-avatar"><img src=' + ref + '/></div><a href="#" class="foundUser-nickname" alt="' + login + '">' + login + '</a></div>'; 
