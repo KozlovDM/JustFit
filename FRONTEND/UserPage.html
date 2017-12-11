@@ -8,6 +8,7 @@
         <script src="js/loadingUserData.js"></script>
         <script src="js/showPhoto.js"></script>
         <script src="js/findUser.js"></script>
+        <script src="js/editData.js"></script>
     </head>
     <body>
         <header class="header">
@@ -28,7 +29,9 @@
         </header>
         <main class="main">
             <div class="main-profile">
-                <div class="main-profile__avatar"><img id="avatar" src="css/images/avatar.jpg"/></div>
+                <div class="main-profile__avatar">
+                    <img id="avatar" src="css/images/avatar.jpg"/>
+                </div>
                 <div class="main-profile__info">
                     <div class="main-profile__info__sec1">
                         <h1 class="sec1__nickname" title="nickname">Никнейм</h1>
@@ -54,6 +57,24 @@
                     <div class="main-profile__info__sec4">
                         <input name="picture" type="file" id="uploadFile"/>
                         <button id="clickbutton">Загрузить публикацию</button>
+                    </div>
+                </div>
+                <div class="main-profile__edit">
+                    <div class="main-profile__edit__row1">
+                        <span class="edit-nickname">Никнейм</span>
+                        <input type="text" id="editNickname" maxLength=30/>
+                    </div>
+                    <div class="main-profile__edit__row2">
+                        <span class="edit-fullname">Имя и Фамилия</span>
+                        <input type="text" id="editFullname" maxLength=30/>
+                    </div>
+                    <div class="main-profile__edit__row3">
+                        <span class="edit-avatar">Аватар</span>
+                        <input type="file" id="editAvatar"/>
+                    </div>
+                    <div class="main-profile__edit__row4">
+                        <button id="sendEditData">Сохранить</button>
+                        <button id="closeEditData">Закрыть</button>
                     </div>
                 </div>
             </div>

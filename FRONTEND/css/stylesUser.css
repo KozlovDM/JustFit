@@ -91,7 +91,7 @@ body {
 
 .main-profile__info {
     height: 200px;
-    width: calc(100% - 200px);
+    width: 500px;
 }
 
 .main-profile__info__sec1 {
@@ -162,6 +162,42 @@ ul.main-profile__info__sec2__stat > li {
 #uploadFile {
     padding-left: 10px;
     padding-top: 15px;
+}
+
+.main-profile__edit {
+    width: 410px;
+}
+
+.main-profile__edit__row1, .main-profile__edit__row2, .main-profile__edit__row3, .main-profile__edit__row4 {
+    height: 50px;
+    display: flex;
+}
+
+.main-profile__edit__row4 {
+    justify-content: center;
+}
+
+.main-profile__edit span {
+    width: 150px;
+    margin-top: 10px;
+}
+
+#editNickname, #editFullname, #editAvatar {
+    height: 20px;
+    margin-top: 9px;
+    font-family: 'Gloria Hallelujah', cursive;
+}
+
+#sendEditData {
+    margin-right: 5px;
+    height: 20px;
+    font-family: 'Gloria Hallelujah', cursive;
+}
+
+#closeEditData {
+    margin-left: 5px;
+    height: 20px;
+    font-family: 'Gloria Hallelujah', cursive;
 }
 
 #collage {
