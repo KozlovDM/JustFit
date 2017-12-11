@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    var phone = location.search.substring(1);
+    var phone = localStorage.getItem('phone');
     
     $('.main-profile__edit').hide();
     

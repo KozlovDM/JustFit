@@ -12,7 +12,8 @@ $(document).ready(function(){
                 type: formMethod,
                 data: formData,
                 success:function(){
-                    window.location.href = "UserPage.html" + "?" + $('#regForm input[name="phone"]').val();
+                    localStorage.setItem('phone', $('#regForm input[name="phone"]').val());
+                    window.location.href = "UserPage.html";
                 },
                 error:function(){
                     alert("Такой пользователь уже существует!");            
@@ -35,7 +36,8 @@ $(document).ready(function(){
                 type: formMethod,
                 data: formData,
                 success:function(){
-                    window.location.href = "UserPage.html" + "?" + $('#enterForm input[name="phone"]').val();
+                    localStorage.setItem('phone', $('#enterForm input[name="phone"]').val());
+                    window.location.href = "UserPage.html";
                 },
                 error:function(){
                     alert("Неправильный номер или пароль!");

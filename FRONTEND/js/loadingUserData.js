@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    var phone = location.search.substring(1);
+    var phone = localStorage.getItem('phone');
     $.ajax({
         url: 'http://127.0.0.1:3000/GetUserData',
         type: 'POST',
