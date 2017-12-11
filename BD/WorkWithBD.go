@@ -66,10 +66,10 @@ func AddUser(fullname string, login string, phone string, password []byte) error
 	return err
 }
 
-func UpdateUser(phone string, phonenew string, fullname string, login string, password []byte, info string) error {
+func UpdateUser(phone string, fullname string, login string, info string) error {
 	stream := SessionMongo.DB("JustFit").C("Users")
 	colQuerier := bson.M{"phone": phone}
-	change := bson.M{"$set": bson.M{"info": info, "name": fullname, "login": login, "phone": phonenew, "hashpassword": password}}
+	change := bson.M{"$set": bson.M{"info": info, "name": fullname, "login": login}}
 	err := stream.Update(colQuerier, change)
 	return err
 }

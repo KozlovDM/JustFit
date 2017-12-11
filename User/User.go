@@ -7,8 +7,6 @@ import (
 	"net/http"
 	"regexp"
 	"strconv"
-
-	"golang.org/x/crypto/bcrypt"
 )
 
 func Subscribe(write http.ResponseWriter, request *http.Request) {
@@ -175,21 +173,14 @@ func UpdateInfo(write http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	phonenew := request.FormValue("phonenew")
 	fullname := request.FormValue("fullname")
 	login := request.FormValue("login")
-	password := request.FormValue("password")
 	info := request.FormValue("info")
-	if phone == "" || fullname == "" || login == "" || password == "" {
+	if fullname == "" || login == "" {
 		JSONResponse.ResponseWhithMessage(write, "Неккоректные данные", http.StatusBadRequest)
 		return
 	}
-	hashPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	if err != nil {
-		JSONResponse.ResponseWhithMessage(write, "Внутренняя ошибка", http.StatusInternalServerError)
-		return
-	}
-	err = WorkWithBD.UpdateUser(phone, phonenew, fullname, login, hashPassword, info)
+	err := WorkWithBD.UpdateUser(phone, fullname, login, info)
 	if err != nil {
 		JSONResponse.ResponseWhithMessage(write, "Внутренняя ошибка", http.StatusInternalServerError)
 		return
@@ -256,8 +247,10 @@ func Search(write http.ResponseWriter, request *http.Request) {
 	login := request.PostFormValue("login")
 
 	reg := regexp.MustCompile(`^(?i)[a-z1-9а-я]*$`)
-	if !reg.MatchString(login) {
-		JSONResponse.ResponseWhithMessage(write, "Неккоректные данные", http.StatusBadRequest)
+	if !reg.MatchString(login) || login == "" {
+		result := make(map[string]interface{})
+		result["count"] = 0
+		JSONResponse.ResponseWhithAllData(write, result, http.StatusOK)
 		return
 	}
 	result, err := WorkWithBD.FindUser(login)

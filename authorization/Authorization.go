@@ -4,6 +4,7 @@ import (
 	"JustFit/BD"
 	"JustFit/JSONResponse"
 	"net/http"
+	"regexp"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -17,6 +18,12 @@ func SingUp(write http.ResponseWriter, request *http.Request) {
 	password := request.FormValue("password")
 
 	if phone == "" || fullname == "" || login == "" || password == "" {
+		JSONResponse.ResponseWhithMessage(write, "Неккоректные данные", http.StatusBadRequest)
+		return
+	}
+
+	reg := regexp.MustCompile(`^(?i)[a-z1-9а-я]*$`)
+	if !reg.MatchString(login) {
 		JSONResponse.ResponseWhithMessage(write, "Неккоректные данные", http.StatusBadRequest)
 		return
 	}
