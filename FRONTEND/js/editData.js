@@ -27,7 +27,6 @@ $(document).ready(function(){
         if (document.getElementById('editAvatar').files.length !== 0) {
             avatar = document.getElementById('editAvatar').files[0];
         }
-        alert(avatar);
         var data = new FormData(); 
         data.append("phone", phone);
         data.append("login", login);

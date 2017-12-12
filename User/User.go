@@ -186,6 +186,8 @@ func UpdateInfo(write http.ResponseWriter, request *http.Request) {
 		return
 	}
 
+	result := make(map[string]interface{})
+	result["avatar"] = nil
 	_, avatar, err := request.FormFile("avatar")
 	if avatar != nil && err == nil {
 		err = WorkWithBD.DeleteAvatar(login)
@@ -198,8 +200,14 @@ func UpdateInfo(write http.ResponseWriter, request *http.Request) {
 			JSONResponse.ResponseWhithMessage(write, "Внутренняя ошибка", http.StatusInternalServerError)
 			return
 		}
+		avatar, err := WorkWithBD.GetAvatar(login)
+		if err != nil {
+			result["avatar"] = nil
+		} else {
+			result["avatar"] = avatar
+		}
 	}
-	JSONResponse.ResponseWhithMessage(write, "Данные обновлены", http.StatusOK)
+	JSONResponse.ResponseWhithAllData(write, result, http.StatusOK)
 }
 
 func ImageInfo(write http.ResponseWriter, request *http.Request) {
