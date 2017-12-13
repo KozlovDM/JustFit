@@ -180,6 +180,12 @@ func UpdateInfo(write http.ResponseWriter, request *http.Request) {
 		JSONResponse.ResponseWhithMessage(write, "Неккоректные данные", http.StatusBadRequest)
 		return
 	}
+
+	if WorkWithBD.IsLoginExist(login) {
+		JSONResponse.ResponseWhithMessage(write, "Логин уже занят", http.StatusBadRequest)
+		return
+	}
+
 	err := WorkWithBD.UpdateUser(phone, fullname, login, info)
 	if err != nil {
 		JSONResponse.ResponseWhithMessage(write, "Внутренняя ошибка", http.StatusInternalServerError)
